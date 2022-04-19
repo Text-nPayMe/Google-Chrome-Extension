@@ -1,6 +1,474 @@
-#gago {
+body {
+    width: 300px;
+    max-width: 300px;
+    height: 300px;
+    max-height: 300px;
+
+    border: 1px solid red;
+
+    padding: 10px;
+}
+
+.d-none {
+    display: none;
+}
+
+.TaP-container {
+    height: min-content;
+    position: absolute;
+    right: 0;
+    top: -5px;
+    z-index: 1110;
+}
+
+._1oFOe {
+  position: absolute;
+  left: 333px;
+  bottom: 15px;
+  transform: rotate(-30deg) scale(1.7);
+  color: #fff;
+  display: none;
+}
+
+._1oFOa {
+  position: absolute;
+  left: -14px;
+  top: 14px;
+  transform: rotate(-90deg) scale(1.7);
+  color: #fff;
+  opacity: 0;
+}
+
+.TaP-current-button-container {
+  right: 0;
+  top: 0px;
+  z-index: 1110;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  z-index: 1112;
+
+  cursor: pointer;
+}
+
+.TaP-current-button-container img{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.TaP-passcode-button-container {
+  position: absolute;
+  right: 25px;
+  width: 22px;
+  height: 100%;
+  top: 5px;
+}
+
+.TaP-passcode-button-container svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.check-icon {
+  width: 17px;
+  position: absolute;
+  right: 0;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.MuiSvgIcon-root {
+  user-select: none;
+  width: 1em !important;
+  height: 1em !important;
+  display: inline-block;
+  fill: currentcolor;
+  flex-shrink: 0;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-size: 1.5rem;
+}
+
+.TaP-container > img {
+    width: 40px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    cursor: pointer;
+
+    opacity:1;
+    transition:opacity 0.5s linear;
+}
+
+.hidden-img {
+    opacity: 0 !important;  
+}
+
+.TaP-container {
+    position: absolute;
+    ${currentInputElement.getBoundingClientRect().top <= 357 
+      ? 'top: 18px;'
+      : 'bottom: 18px;' 
+    }
+    left: 15px;
+
+    box-sizing: border-box;
+    width: 340px;
+    min-height: 170px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 25px 35px 15px 35px;
+    background: #FFFFFF;
+    box-shadow: 1px 1px 40px rgba(26, 26, 26, 0.1);
+    border-radius: 24px;
+}
+
+div .formstep-2 {
+    display: none;
+}
+
+.hidden-form {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.visible-form {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.TaP-form-container form {
+    width: 100%;
+}
+
+.TaP-FormControl-root {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
     position: relative;
-    top: 5px;
-    left: 400px;
-    width: 200px;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    width: 100%;
+    margin-bottom: 9px;
+}
+
+.TaP-InputLabel-root {
+    color: rgba(0, 0, 0, 0.6);
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.4375em;
+    letter-spacing: 0.00938em;
+    padding: 0;
+    position: relative;
+    display: block;
+    transform-origin: top left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    -webkit-transform: translate(0, 20px) scale(1);
+    -moz-transform: translate(0, 20px) scale(1);
+    -ms-transform: translate(0, 20px) scale(1);
+    transform: translate(0, 20px) scale(1);
+    -webkit-transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,-webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+    transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+
+}
+
+.label-focus {
+    transform: translate(0, -1.5px) scale(0.75);
+}
+
+body div .input-focused label {
+    color: #FFAC30;
+}
+
+div .input-error label {
+  color: #F44336;
+}
+
+  body div .input-focused > div:before {
+      border-bottom: 1px solid #FFAC30;
+  }
+
+  div .input-error > div:before {
+      border-bottom: 1px solid #F44336;
+  }
+
+  .error-message {
+      opacity: 0;
+  }
+
+.reset-btn {
+  font-size: 15px !important;
+}
+
+.TaP-Input-root {
+    margin-top: 16px;
+
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.4375em;
+    letter-spacing: 0.00938em;
+    color: rgba(0, 0, 0, 0.87);
+    box-sizing: border-box;
+    position: relative;
+    cursor: text;
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: relative;
+}
+.TaP-Input-root:before {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+    left: 0;
+    bottom: 0;
+    content: "";
+    position: absolute;
+    right: 0;
+    -webkit-transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    pointer-events: none;
+}
+
+.TaP-Input-root:after {
+    border-bottom: 2px solid #1976d2;
+    left: 0;
+    bottom: 0;
+    content: "";
+    position: absolute;
+    right: 0;
+    -webkit-transform: scaleX(0);
+    -moz-transform: scaleX(0);
+    -ms-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transition: -webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+    transition: transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+    pointer-events: none;
+}
+
+.TaP-Input-root:after {
+    border-bottom: 2px solid #1976d2;
+    left: 0;
+    bottom: 0;
+    content: "";
+    position: absolute;
+    right: 0;
+    -webkit-transform: scaleX(0);
+    -moz-transform: scaleX(0);
+    -ms-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transition: -webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+    transition: transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+    pointer-events: none;
+}
+
+.TaP-Input-input {
+    font: inherit;
+    letter-spacing: inherit;
+    color: currentColor;
+    padding: 4px 0 5px;
+    border: 0;
+    box-sizing: content-box;
+    background: none;
+    height: 1.4375em;
+    margin: 0;
+    -webkit-tap-highlight-color: transparent;
+    display: block;
+    min-width: 0;
+    width: 100%;
+    -webkit-animation-name: mui-auto-fill-cancel;
+    animation-name: mui-auto-fill-cancel;
+    -webkit-animation-duration: 10ms;
+    animation-duration: 10ms;
+
+    outline: none;
+}
+
+
+.TaP-button {
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1A1A1A;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 24px;
+
+    letter-spacing: 0.4px;
+
+    color: rgba(26, 26, 26, 0.9);
+
+    margin-bottom: 12px;
+}
+
+body div .btn-static {
+    background-color: #FFAC30;
+    color: #1A1A1A;
+
+    border: 0;
+}
+
+body div .btn-static:hover {
+  background: linear-gradient(0deg, rgba(241, 241, 241, 0.16), rgba(241, 241, 241, 0.16)), #FFAC30;
+}
+
+.btn-white {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(26, 26, 26, 0.42);
+}
+.btn-white:hover {
+  background-color: #1a1a1a0d;
+}
+
+div .approve-btn {
+  color: rgba(26, 26, 26, 0.38);
+  font-size: 15px;
+}
+
+.error-message {
+    color: #F44336;
+    font-size: 12px;
+}
+
+.notifications {
+  position: fixed;
+  bottom: 50px;
+  left: 50px;
+  z-index: 100000000;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.notifications > div {
+  width: 300px;
+  padding: 30px;
+  position: relative;
+  border-radius: 15px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+  color: white;
+  font-size: 20px;
+  animation: goIn 1s ease-out forwards, goOut 1s ease-out forwards 5s;
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.25);
+  margin-top: 20px;
+}
+.fading_out {
+  opacity: 0 !important;
+  transform: translateX(-300px) !important;
+  transition: all 1s ease-out !important;
+}
+.notifications > div.green {
+  background-color: #80e76f;
+}
+.notifications > div.red {
+  background-color: #e7816f;
+}
+.notifications > div.normal {
+  background-color: #f2f4ff;
+  color: black;
+}
+@keyframes goIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-300px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+@keyframes goOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-300px);
+  }
+}
+.notifications > div > div {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 5px;
+  right: 5px;
+  border-radius: 50%;
+  padding: 0px 2.5px;
+  cursor: pointer;
+}
+.notifications > div > div:active {
+  background-color: #bababa;
+}
+.notifications > div > div div {
+  height: 2.5px;
+  width: 15px;
+  background-color: white;
+  margin: 5px;
+  border-radius: 1.25px;
+  position: relative;
+  transform: rotate(45deg);
+}
+.notifications > div.normal > div div {
+  background-color: black;
+}
+.notifications > div > div div:first-child {
+  transform: rotate(-45deg);
+  top: 7.5px;
+}
+
+.d-none {
+  display: none !important;
 }

@@ -68,7 +68,6 @@ function onFocusIn(event) {
       )
     {
       currentInputElement = el
-      console.log(currentInputElement, 'currentInputElement');
 
       var hasGrammerlyElement = currentInputElement.parentNode.getElementsByTagName('grammarly-extension');
       // var a = children.filter(el => el.tagName === 'GRAMMARLY-EXTENSION')
@@ -209,8 +208,8 @@ function appendButton(textElement) {
       textElement.parentNode.style.position = 'relative';
       textElement.parentNode.style.overflow = 'initial';
 
-      var isExistFormButton = document.getElementById('TaP-button-yellow');
-      if (isExistFormButton) return false
+      // var isExistFormButton = document.getElementById('TaP-button-yellow');
+      // if (isExistFormButton) return false
 
       textElement.parentNode.appendChild(createFormAndMainButton());
       
@@ -854,18 +853,16 @@ function createFormAndMainButton() {
   link3.rel = 'stylesheet';
   link3.href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap';
 
-  var scriptJQuery = document.createElement('script');
-  scriptJQuery.src = 'http://code.jquery.com/jquery-1.8.3.min.js';
+  // var scriptJQuery = document.createElement('script');
+  // scriptJQuery.src = 'http://code.jquery.com/jquery-1.8.3.min.js';
 
-  var scriptEncrypt = document.createElement('script');
-  scriptEncrypt.src = 'jsencrypt-master/bin/jsencrypt.min.js';
 
   head.appendChild(link1);
   head.appendChild(link2);
   head.appendChild(link3);
 
-  head.appendChild(scriptJQuery);
-  head.appendChild(scriptEncrypt);
+
+  // head.appendChild(scriptJQuery);
   
   style.type = 'text/css';
   if (style.styleSheet){

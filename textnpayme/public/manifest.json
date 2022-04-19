@@ -8,15 +8,12 @@
   },
   "action": {
     "default_icon": "images/logo-main.png",
-    "default_popup": "textnpayme/build/index.html",
+    "default_popup": "index.html",
     "default_title": "Click Me"
   },
-  "background": {
-    "service_worker": "background.js"
-  },
   "content_scripts": [{
-    "matches": ["*://*/*"],
-    "js": ["content.js"]
+    "matches": ["<all_urls>"],
+    "js": ["jsencrypt-master/bin/jsencrypt.min.js", "content.js"]
   }],
   "permissions": [
     "activeTab",

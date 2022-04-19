@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>V Launcher</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" type="text/css">
+    <link
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css">
+
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="jsencrypt-master/bin/jsencrypt.min.js"></script>
+</head>
+<body>
+    <input type="text" class="d-none" id="pub-key" value="-----BEGIN PUBLIC KEY-----
+    MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtN
+    FOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76
+    xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4
+    gwQco1KRMDSmXSMkDwIDAQAB
+    -----END PUBLIC KEY-----">
+    
+    <a href="https://textnpay.co/signup" id="register" target="_blank">Register</a>
+
+    <form id="login-form">
+        <label>
+            <input type="text" id="login" />
+        </label>
+        <label>
+            <input type="text" id="password" />
+        </label>
+
+        <button id="submit">Login</button>
+    </form>
+
+    <div id="paymant">
+        <div>
+            <img src="./images/logo-main.png" width="30">
+            <h3>Text nPay me</h3>
+        </div>
+        <form>
+            <div class="TaP-FormControl-root formstep-1">
+                <label class="TaP-InputLabel-root" for="receiverElement" id="receiverElementLabel">
+                    Receiver’s name
+                </label>
+                <div class="TaP-Input-root">
+                    <input 
+                        name="receiver"
+                        type="text" 
+                        id="receiverElement" 
+                        class="TaP-Input-input" 
+                        value="" 
+                    />
+                    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg"  class='check-icon d-none'>
+                        <path d="M6.00016 11.1701L1.83016 7.00009L0.410156 8.41009L6.00016 14.0001L18.0002 2.00009L16.5902 0.590088L6.00016 11.1701Z" fill="#4CAF50"/>
+                    </svg>
+                </div>
+                <div class="error-message">Please Enter receiver name</div>
+            </div>
+    
+            <div class="TaP-FormControl-root formstep-1">
+                <label class="TaP-InputLabel-root" for="phoneElement" id="phoneElementLabel">
+                    Mobile phone number
+                </label>
+                <div class="TaP-Input-root">
+                    <input 
+                        name="phone"
+                        type="text" 
+                        id="phoneElement" 
+                        class="TaP-Input-input" 
+                        value="" 
+                    />
+                    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg"  class='check-icon d-none'>
+                        <path d="M6.00016 11.1701L1.83016 7.00009L0.410156 8.41009L6.00016 14.0001L18.0002 2.00009L16.5902 0.590088L6.00016 11.1701Z" fill="#4CAF50"/>
+                    </svg>
+                </div>
+                <div class="error-message">Please Enter receiver phone</div>
+            </div>
+    
+            <div class="TaP-FormControl-root formstep-1">
+                <label class="TaP-InputLabel-root" for="amountElement" id="amountElementLabel">
+                    Amount (AMD)
+                </label>
+                <div class="TaP-Input-root">
+                    <input
+                        name="amount"
+                        type="number" 
+                        id="amountElement" 
+                        class="TaP-Input-input" 
+                        value="" 
+                    />
+                    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg"  class='check-icon d-none'>
+                        <path d="M6.00016 11.1701L1.83016 7.00009L0.410156 8.41009L6.00016 14.0001L18.0002 2.00009L16.5902 0.590088L6.00016 11.1701Z" fill="#4CAF50"/>
+                    </svg>
+                </div>
+                <div class="error-message">Please Enter amount</div>
+            </div>
+
+            <div class="TaP-FormControl-root formstep-2">
+                <label class="TaP-InputLabel-root" for="senderElement" id="senderElementLabel">
+                    Your phone number
+                </label>
+                <div class="TaP-Input-root">
+                    <input 
+                        name="phone"
+                        type="text" 
+                        id="senderElement" 
+                        class="TaP-Input-input" 
+                        value="" 
+                    />
+                    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg"  class='check-icon d-none'>
+                        <path d="M6.00016 11.1701L1.83016 7.00009L0.410156 8.41009L6.00016 14.0001L18.0002 2.00009L16.5902 0.590088L6.00016 11.1701Z" fill="#4CAF50"/>
+                    </svg>
+                </div>
+                <div class="error-message">Please Enter your phone</div>
+            </div>
+    
+            <div class="TaP-FormControl-root formstep-2">
+                <label class="TaP-InputLabel-root" for="passcodeElement" id="passcodeElementLabel">
+                    Enter your passcode
+                </label>
+                <div class="TaP-Input-root">
+                    <input
+                        name="amount"
+                        type="password" 
+                        id="passcodeElement" 
+                        class="TaP-Input-input" 
+                        value="" 
+                    />
+                    <div class="TaP-passcode-button-container" id="TaP-passCodeVisibleBtn">
+                        <svg id="TaP-passShowElem" class="hidden-img MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="VisibilityIcon"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                        <svg id="TaP-passHiddenElem" class="  MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="VisibilityOffIcon"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"></path></svg>
+                    </div>
+                    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg"  class='check-icon d-none'>
+                        <path d="M6.00016 11.1701L1.83016 7.00009L0.410156 8.41009L6.00016 14.0001L18.0002 2.00009L16.5902 0.590088L6.00016 11.1701Z" fill="#4CAF50"/>
+                    </svg>
+                </div>
+                <div class="error-message">Please Enter passcode</div>
+            </div>
+    
+            <button class="TaP-button btn-static send-btn formstep-1">
+              Send
+            </button>
+            <button class="TaP-button btn-white generate-btn formstep-1">
+              Generate a magic link
+            </button>
+            <button class="TaP-button btn-white approve-btn formstep-2 ">
+              Approve the payment
+            </button>
+            <button class="TaP-button btn-white logingenerate-btn formstep-2 ">
+              Login and generate a magic link
+            </button>
+          
+            <button class="TaP-button btn-white receipt-btn formstep-2 d-none">
+              Copy the payment receipt link
+            </button>
+
+            <button class="TaP-button btn-white reset-btn formstep-2 d-none">
+              Make a new payment
+            </button>
+        </form>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+
+    // Call this code when the page is done loading.
+    $(function() {
+        var registerBtn = document.getElementById('register');
+        var loginForm = document.getElementById('login-form');
+        var user = localStorage.getItem('TpM-user');
+        
+        console.log(user, 'user');
+
+        if (user) {
+            registerBtn.classList.add('d-none');
+            loginForm.classList.add('d-none');
+        }
+      // Run a quick encryption/decryption when they click.
+      $('#submit').click(function(event) {
+        event.preventDefault()
+
+        // // Encrypt with the public key...
+        var encrypt = new JSEncrypt();
+        // console.log(encrypt, 'encrypt');
+        // encrypt.setPublicKey($('#pubkey').val());
+        // var encrypted = encrypt.encrypt($('#input').val());
+        // console.log(encrypted, 'encrypted');
+
+        // // Decrypt with the private key...
+        // var decrypt = new JSEncrypt();
+        // decrypt.setPrivateKey($('#privkey').val());
+        // var uncrypted = decrypt.decrypt('encrypted');
+
+        // console.log(uncrypted, 'uncrypted');
+
+        // // Now a simple check to see if the round-trip worked.
+        // if (uncrypted == $('#input').val()) {
+        //   alert('It works!!!');
+        // }
+        // else {
+        //   alert('Something went wrong....');
+        // }
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        encrypt.setPublicKey($('#pub-key').val());
+        var phone = encrypt.encrypt("+37491142700");
+        var password = encrypt.encrypt("654321");
+        // var phone = "+37491142700";
+        // var password = "654321";
+        var raw = JSON.stringify({"phone": phone,"password":password});
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3000/users/login", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            if (result.success) {
+                localStorage.setItem('TpM-user', result.data)
+            }
+            console.log(result.data)
+            console.log(result.data.user)
+        })
+        .catch(error => console.log('error', error));
+
+
+      });
+      addMainFunctionality()
+
+      function addMainFunctionality () {
+            var encrypt = new JSEncrypt();
+            var decrypt = new JSEncrypt();
+
+            var specifiedElement = document.getElementById('TaP-container');
+
+            var receiverElement = document.getElementById('receiverElement');
+            var receiverElementLabel = document.getElementById('receiverElementLabel');
+            
+            var phoneElement = document.getElementById('phoneElement');
+            var phoneElementLabel = document.getElementById('phoneElementLabel');
+
+            var senderElement = document.getElementById('senderElement');
+            var senderElementLabel = document.getElementById('senderElementLabel');
+            
+            var amountElement = document.getElementById('amountElement');
+            var amountElementLabel = document.getElementById('amountElementLabel');
+            
+            var passcodeElement = document.getElementById('passcodeElement');
+            var passcodeElementLabel = document.getElementById('passcodeElementLabel');
+            
+
+        //   receiver
+            receiverElement.addEventListener('input', function() {
+            state.receiver = receiverElement.value;
+
+            if (receiverElement.value.length) {
+                receiverElementLabel.parentNode.classList.remove('input-error');
+                receiverElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+                // receiverElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+            } else {
+                receiverElementLabel.parentNode.classList.add('input-error');
+                receiverElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+                // receiverElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+            }
+            });
+            receiverElement.addEventListener('focus', function(event) { 
+                receiverElementLabel.classList.add('label-focus');
+                receiverElementLabel.parentNode.classList.add('input-focused');
+                
+            });
+            receiverElement.addEventListener('blur', function(event) {
+            if (!state.receiver.length) {
+                receiverElementLabel.classList.remove('label-focus');
+            }
+            receiverElementLabel.parentNode.classList.remove('input-focused');
+            state.receiver = event.target.value;
+
+            if (event.target.value.length) {
+                receiverElementLabel.parentNode.classList.remove('input-error');
+                receiverElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+                receiverElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+            } else {
+                receiverElementLabel.parentNode.classList.add('input-error');
+                receiverElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+                receiverElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+            }
+
+            });
+        //   receiver end
+            
+        //   phone
+            phoneElement.addEventListener('input', function() { 
+            state.phone = phoneElement.value;
+
+            if (phoneElement.value.length) {
+                phoneElementLabel.parentNode.classList.remove('input-error');
+                phoneElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+                // phoneElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+            } else {
+                phoneElementLabel.parentNode.classList.add('input-error');
+                phoneElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+                // phoneElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+            }
+            });
+            phoneElement.addEventListener('focus', function() {
+                phoneElementLabel.classList.add('label-focus')
+                phoneElementLabel.parentNode.classList.add('input-focused');
+            });
+            phoneElement.addEventListener('blur', function(event) {
+            if (!state.phone.length) {
+                phoneElementLabel.classList.remove('label-focus')
+            }
+            phoneElementLabel.parentNode.classList.remove('input-focused');
+
+            state.phone = event.target.value;
+
+            if (event.target.value.length) {
+                phoneElementLabel.parentNode.classList.remove('input-error');
+                phoneElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+                phoneElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+            } else {
+                phoneElementLabel.parentNode.classList.add('input-error');
+                phoneElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+                phoneElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+            }
+            });
+        // phone end
+
+        //   sender
+        senderElement.addEventListener('input', function() { 
+            state.sender = senderElement.value; 
+            if (senderElement.value.length) {
+            senderElementLabel.parentNode.classList.remove('input-error');
+            senderElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+            // senderElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+            } else {
+            senderElementLabel.parentNode.classList.add('input-error');
+            senderElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+            // senderElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+            }
+        });
+        senderElement.addEventListener('focus', function() {
+            senderElementLabel.classList.add('label-focus')
+            senderElementLabel.parentNode.classList.add('input-focused');
+            });
+            senderElement.addEventListener('blur', function(event) {
+            if (!state.sender.length) {
+            senderElementLabel.classList.remove('label-focus')
+            }
+            senderElementLabel.parentNode.classList.remove('input-focused');
+
+            state.sender = event.target.value;
+
+            if (event.target.value.length) {
+            senderElementLabel.parentNode.classList.remove('input-error');
+            senderElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+            senderElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+            } else {
+            senderElementLabel.parentNode.classList.add('input-error');
+            senderElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+            senderElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+            }
+        });
+        // sender end
+            
+        // amount    
+            amountElement.addEventListener('input', function() { 
+            state.amount = amountElement.value;
+
+            if (amountElement.value.length) {
+                amountElementLabel.parentNode.classList.remove('input-error');
+                amountElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+                // amountElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+            } else {
+                amountElementLabel.parentNode.classList.add('input-error');
+                amountElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+                // amountElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+            }
+            });
+            amountElement.addEventListener('focus', function() {
+                amountElementLabel.classList.add('label-focus');
+                amountElementLabel.parentNode.classList.add('input-focused');
+            });
+            amountElement.addEventListener('blur', function(event) {
+            if (!state.amount.length) {
+                amountElementLabel.classList.remove('label-focus')
+            }
+            amountElementLabel.parentNode.classList.remove('input-focused');
+            state.amount = event.target.value;
+
+            if (event.target.value.length) {
+                amountElementLabel.parentNode.classList.remove('input-error');
+                amountElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+                amountElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+            } else {
+                amountElementLabel.parentNode.classList.add('input-error');
+                amountElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+                amountElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+            }
+            });
+            // amount end   
+            
+            var approveBtn = document.getElementsByClassName('approve-btn')[0];
+            var receiptBtn = document.getElementsByClassName('receipt-btn')[0];
+            var resetBtn = document.getElementsByClassName('reset-btn')[0];
+            var logingenerateBtn = document.getElementsByClassName('logingenerate-btn')[0];
+
+            passcodeElement.addEventListener('input', function() { 
+            state.passcode = passcodeElement.value
+            if (passcodeElement.value.length) {
+                approveBtn.classList.add('btn-static');
+                logingenerateBtn.classList.add('btn-static');
+
+                passcodeElementLabel.parentNode.classList.remove('input-error');
+                passcodeElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+                // passcodeElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+            } else {
+                approveBtn.classList.remove('btn-static');
+                logingenerateBtn.classList.remove('btn-static');
+
+                passcodeElementLabel.parentNode.classList.add('input-error');
+                passcodeElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+                // passcodeElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+            }
+            });
+            passcodeElement.addEventListener('focus', function() {
+                passcodeElementLabel.classList.add('label-focus');
+                passcodeElementLabel.parentNode.classList.add('input-focused');
+            });
+            passcodeElement.addEventListener('blur', function(event) {
+            if (!state.passcode.length) {
+                passcodeElementLabel.classList.remove('label-focus');
+            }
+            passcodeElementLabel.parentNode.classList.remove('input-focused');
+
+            state.passcode = event.target.value;
+
+            if (event.target.value.length) {
+                passcodeElementLabel.parentNode.classList.remove('input-error');
+                passcodeElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+                passcodeElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+            } else {
+                passcodeElementLabel.parentNode.classList.add('input-error');
+                passcodeElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+                passcodeElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+            }
+            });  
+
+
+            
+            var tapFormContainer = document.getElementsByClassName('TaP-container')[0];
+            var tapButton = document.getElementById('TaP-button');
+            var tapButtonYellow = document.getElementById('TaP-button-yellow');
+
+            function addReceiverIfExist (){
+            
+            console.log(currentInputElement.value, 'currentInputElement');
+            console.log(currentInputElement.innerHTML, 'currentInputElement');
+            var str = currentInputElement.value || '';
+
+            var getAmount = str.split(/ուղարկել|փոխանցել|ղրգել|ղարգել|send/)[1]
+            console.log(getAmount, 'getAmount');
+            if (getAmount) {
+
+                var amountElement = document.getElementById('amountElement');
+                var amountElementLabel = document.getElementById('amountElementLabel');
+                getAmount = getAmount.split(/to|դեպի/)[0];
+                getAmount = getAmount.replace(/\D/g, "");
+
+                if (amountElement) {
+                state.amount = getAmount;
+                amountElement.value = getAmount;
+                amountElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+                amountElementLabel.classList.add('label-focus');
+
+                amountElementLabel.parentNode.classList.remove('input-error');
+                amountElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+                }
+            }
+
+
+
+            var getReceiver = str.split(/to|դեպի/)[1]
+
+            if (getReceiver) {
+                var receiverElement = document.getElementById('receiverElement');
+                var receiverElementLabel = document.getElementById('receiverElementLabel');  
+
+                var phoneElement = document.getElementById('phoneElement');
+                var phoneElementLabel = document.getElementById('phoneElementLabel');
+
+                var isPhoneWrote = /\d+/g.test(getReceiver);
+
+
+                if (phoneElement && isPhoneWrote) {
+                phoneElement.value = getReceiver;
+                state.phone = getReceiver;
+                phoneElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+                phoneElementLabel.classList.add('label-focus');
+
+                phoneElementLabel.parentNode.classList.remove('input-error');
+                phoneElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+                }
+
+                if (receiverElement && !isPhoneWrote) {
+                state.receiver = getReceiver;
+                receiverElement.value = getReceiver;
+                receiverElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+                receiverElementLabel.classList.add('label-focus');
+
+                receiverElementLabel.parentNode.classList.remove('input-error');
+                receiverElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+                }
+            }
+            }
+
+
+
+            // var formBtn = document.getElementsByClassName('TaP-form-btn')[1];
+            // console.log(tapButtonYellow, 'tapButtonYellow');
+            tapButtonYellow.parentNode.addEventListener('click', function() {
+            if (state.open) {
+                tapButton.classList.remove('hidden-img');
+                tapButtonYellow.classList.add('hidden-img');
+            
+                tapFormContainer.classList.add("hidden-form");
+                tapFormContainer.classList.remove("visible-form");
+            
+                state.open = false;
+            } else {
+                addReceiverIfExist()
+
+                tapButton.classList.add('hidden-img');
+                tapButtonYellow.classList.remove('hidden-img');
+            
+                tapFormContainer.classList.remove("hidden-form");
+                tapFormContainer.classList.add("visible-form");
+            
+                state.open = true;
+            }
+            });
+
+            var passCodeVisibleBtn = document.getElementById('TaP-passCodeVisibleBtn');
+            var passShowElem = document.getElementById('TaP-passShowElem');
+            var passHiddenElem = document.getElementById('TaP-passHiddenElem');
+
+            passCodeVisibleBtn.addEventListener('click', function() {
+            if (state.passcodeVisible) {
+                passShowElem.classList.remove('hidden-img');
+                passHiddenElem.classList.add('hidden-img');
+                passcodeElement.setAttribute('type', 'text');
+                state.passcodeVisible = false;
+            } else {
+                passShowElem.classList.add('hidden-img');
+                passHiddenElem.classList.remove('hidden-img');
+                passcodeElement.setAttribute('type', 'password');
+                state.passcodeVisible = true;
+            }
+            });
+
+            
+            var sendBtn = document.getElementsByClassName('send-btn')[0];
+            var formStepOneItems = document.getElementsByClassName('formstep-1');
+            var formStepTwoItems = document.getElementsByClassName('formstep-2');
+            
+            sendBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            if (!state.receiver.length || !state.phone.length || !state.amount.length) {
+                pushNotification('Please fill all fields!', 'normal');
+                return;
+            }
+            
+            Array.prototype.forEach.call(formStepOneItems, element => {
+                element.style.display = 'none';
+            });
+            
+            Array.prototype.forEach.call(formStepTwoItems, element => {
+                element.style.display = 'inline-flex';
+            });
+
+            logingenerateBtn.classList.add('d-none');
+            });
+
+            var generateBtn = document.getElementsByClassName('generate-btn')[0];
+
+            generateBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            if (!state.receiver.length || !state.phone.length || !state.amount.length) {
+                pushNotification('Please fill all fields!', 'normal');
+                return;
+            }
+
+            Array.prototype.forEach.call(formStepOneItems, element => {
+                element.style.display = 'none';
+            });
+            
+            Array.prototype.forEach.call(formStepTwoItems, element => {
+                element.style.display = 'inline-flex';
+            });
+
+            approveBtn.style.display = 'none';
+            
+            });
+
+            logingenerateBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            encrypt.setPublicKey(jsencryptConf.publicKey);
+            var phone = encrypt.encrypt(state.sender);
+            var password = encrypt.encrypt(state.passcode);
+            var options = {
+                method: 'POST',
+                body: JSON.stringify({
+                phone: phone || state.sender,
+                password: password || state.passcode
+                }),
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            }
+
+            fetch(`${state.appUrl}users/login`, options)
+            .then(res => res.json())
+            .then(loginData => {
+                if (loginData.success) {
+                console.log(loginData);
+                state.authtoken = loginData?.data?.tokens.accessToken;
+
+                var url = `${"https://link.textnpay.co/"}magic-link?sender=${encodeURIComponent(state.sender)}&receiver=${encodeURIComponent(state.phone)}&amount=${state.amount}&token=${state.authtoken}`;
+                navigator.clipboard.writeText(url);
+                logingenerateBtn.style.pointerEvents = 'none';
+                pushNotification('Magic link was generated and copied', 'green');
+
+                state = {
+                    open: false,
+                    receiver: '',
+                    phone: '',
+                    amount: '',
+                    sender: '',
+                    authtoken: '',
+                    passcode: '',
+                    formStep: 1,
+                    error: {
+                        type: '',
+                        message: ''
+                    },
+                    loginError: null
+                }
+                } else {
+                pushNotification(loginData.error, 'red');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                // pushNotification(err, 'red');
+            })
+            });
+
+            receiptBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            var receiptUrl = `${state.receiptUrl}`;
+            navigator.clipboard.writeText(receiptUrl);
+            receiptBtn.innerHTML = "Copy the payment receipt link&nbsp; <img src='https://i.ibb.co/xsnnDCr/check.png' style={width: 17px} />"
+
+            pushNotification(`Receipt URL was copied`, 'green');
+            });
+
+
+            receiverElement.addEventListener('keypress', function(event) {
+
+            if (event.key === "Enter") {
+                event.preventDefault();
+                console.log(event.target.value);
+                var options = {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    name: event.target.value,
+                }),
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+                }
+
+                fetch(`${state.appUrl}users/existsname`, options)
+                .then(res => res.json())
+                .then(userData => { 
+                if (userData.success && Object.keys(userData.data).length) {
+                    state.phone = userData.data.phone;
+                    state.receiver = userData.data.name;
+
+                    receiverElement.value = userData.data.name;
+                    phoneElement.value = userData.data.phone;
+                    phoneElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+                    phoneElementLabel.classList.add('label-focus');
+
+                    phoneElementLabel.parentNode.classList.remove('input-error');
+                    phoneElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+                } else {
+                    pushNotification('Contact dose not exist', 'normal');
+                }
+                })
+                }
+            });
+
+            approveBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            encrypt.setPublicKey(jsencryptConf.publicKey);
+            var phone = encrypt.encrypt(state.sender);
+            var password = encrypt.encrypt(state.passcode);
+
+            var options = {
+                method: 'POST',
+                body: JSON.stringify({
+                phone: phone || state.sender,
+                password: password || state.passcode
+                }),
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            }
+
+            fetch(`${state.appUrl}users/login`, options)
+            .then(res => res.json())
+            .then(loginData => {
+                if (loginData.success) {
+                console.log(loginData);
+                state.authtoken = loginData?.data?.tokens.accessToken
+                
+                encrypt.setPublicKey(jsencryptConf.publicKey);
+                var text = encrypt.encrypt('send');
+                var receiver = encrypt.encrypt(state.phone);
+                var amount = encrypt.encrypt(state.amount);
+            
+                var trOptions = {
+                    method: 'POST',
+                    body: JSON.stringify({
+                    text: text || 'send',
+                    receiver: receiver || state.phone,
+                    card_id: '',
+                    amount: amount || state.amount,
+                    }),
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${state.authtoken}`
+                    })
+                }
+            
+                fetch(`${state.appUrl}transactions`, trOptions)
+                    .then(res => res.json())
+                    .then(transactionData => {
+                    if (transactionData.success) {
+
+                        var approveTransactionOptions = {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            sticker: true
+                        }),
+                        headers: new Headers({
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${state.authtoken}`
+                        })
+                        }
+
+                        var transactionId = transactionData.data.id;
+
+                        fetch(`${state.appUrl}transactions/${transactionId}/approve`, approveTransactionOptions)
+                        .then(res => res.json())
+                        .then(approvedTransactionData => {
+                            if (approvedTransactionData.success) {
+
+                            console.log(approvedTransactionData, 'approvedTransactionData');
+                            approveBtn.innerHTML = "Approved and sent &nbsp; <img src='https://i.ibb.co/xsnnDCr/check.png' style={width: 17px} />";
+                            approveBtn.style.pointerEvents = 'none';
+                            receiptBtn.classList.remove('d-none');
+                            resetBtn.classList.remove('d-none');
+                            
+                            state.receiptUrl = approvedTransactionData.data.url;
+                            pushNotification(`Transaction ${approvedTransactionData.data.transaction.id} successfully completed!`, 'green');
+                            } else {
+                            pushNotification(approvedTransactionData.error, 'red')
+                            }
+                        }).catch(err => {
+                            pushNotification(err, 'red')
+                        });
+                        
+
+                    } else {
+                        pushNotification(loginData.error, 'red');
+                    }
+                    }).catch(err => {
+                    console.log(err, 'err');
+                    })
+                } else {
+                state.loginError = loginData.error
+                pushNotification(loginData.error, 'red');
+                }
+
+                console.log(state);
+
+            }).catch(err => {
+                console.log(err);
+
+            })
+            });
+
+
+
+            // handle clock outside
+
+            var exist = document.getElementsByClassName('TaP-current-button-container')[0];
+
+            //I'm using "click" but it works with any event
+            document.addEventListener('click', function(event) {
+            var isClickInside = specifiedElement.contains(event.target);
+            var isClickInsideBtn = exist.contains(event.target);
+            if (!isClickInside && !isClickInsideBtn) {
+                if (specifiedElement.classList.contains('visible-form')) {
+                tapButtonYellow.click()
+                }
+            }
+            });
+
+            }
+    });
+  </script>
+</html>
