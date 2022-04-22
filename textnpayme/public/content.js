@@ -326,7 +326,7 @@ function createFormAndMainButton() {
                 </label>
                 <div class="TaP-Input-root">
                     <input
-                        name="amount"
+                        name="passcode"
                         type="password" 
                         id="passcodeElement" 
                         class="TaP-Input-input" 

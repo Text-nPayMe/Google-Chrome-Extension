@@ -1,0 +1,44 @@
+div .MuiFormHelperText-root {
+    margin: 0;
+    color: #d32f2f;
+}
+
+div input:-internal-autofill-selected {
+    background-color: transparent !important;
+}
+
+#outlined-adornment-password-label {
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+
+.btn-base {
+    background-color: #FFAC30 !important;
+    box-shadow: inherit !important;
+
+}
+
+.btn-base:hover {
+    background-color: #ffac30b7 !important;
+}
+
+.btn-white {
+    background-color: white !important;
+    box-shadow: inherit !important;
+    border: 2px solid lightgray !important;
+    color: black !important;
+}
+
+.btn-white:hover {
+    background-color: #e6d4b9b7 !important;
+}
+
+.upper {
+    text-transform: unset !important;
+    font-size: 15px !important;
+}
