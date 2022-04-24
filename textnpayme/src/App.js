@@ -28,11 +28,12 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 
 var jsencryptConf = {
-  "publicKey": "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQAB-----END PUBLIC KEY-----",
+  "publicKeys": "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQAB-----END PUBLIC KEY-----",
   "privateKey": "-----BEGIN RSA PRIVATE KEY-----MIICXQIBAAKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQABAoGAfY9LpnuWK5Bs50UVep5c93SJdUi82u7yMx4iHFMc/Z2hfenfYEzu+57fI4fvxTQ//5DbzRR/XKb8ulNv6+CHyPF31xk7YOBfkGI8qjLoq06V+FyBfDSwL8KbLyeHm7KUZnLNQbk8yGLzB3iYKkRHlmUanQGaNMIJziWOkN+N9dECQQD0ONYRNZeuM8zd8XJTSdcIX4a3gy3GGCJxOzv16XHxD03GW6UNLmfPwenKu+cdrQeaqEixrCejXdAFz/7+BSMpAkEA8EaSOeP5Xr3ZrbiKzi6TGMwHMvC7HdJxaBJbVRfApFrE0/mPwmP5rN7QwjrMY+0+AbXcm8mRQyQ1+IGEembsdwJBAN6az8Rv7QnD/YBvi52POIlRSSIMV7SwWvSK4WSMnGb1ZBbhgdg57DXaspcwHsFV7hByQ5BvMtIduHcT14ECfcECQATeaTgjFnqE/lQ22Rk0eGaYO80cc643BXVGafNfd9fcvwBMnk0iGX0XRsOozVt5AzilpsLBYuApa66NcVHJpCECQQDTjI2AQhFc1yRnCU/YgDnSpJVm1nASoRUnU8Jfm3Ozuku7JUXcVpt08DFSceCEX9unCuMcT72rAQlLpdZir876-----END RSA PRIVATE KEY-----"
 }
 // 'https://d-api.textnpay.co/',
-const appUrl = 'http://localhost:3000/';
+// const appUrl = 'http://localhost:3000/';
+const appUrl = 'https://d-api.textnpay.co/';
 
 const initState = {
   phone: '',
@@ -43,8 +44,6 @@ const initState = {
   showPassword: false,
   firstStep: true,
   isGenerateMagic: false,
-  loggedIn: false,
-  user: null,
   makeNewPayment: false,
   errors: {}
 }
@@ -78,6 +77,8 @@ function App() {
   var encrypt = new JSEncrypt();
 
   const [mainState, setMainState] = useState(initState);
+  const [openLoginForm, setOpenLoginForm] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [notification, setNotification] = useState({
     open: false,
     vertical: 'bottom',
@@ -107,8 +108,6 @@ function App() {
     });
   };
 
-
-
   const handleClose = () => {
     setNotification({ ...notification, open: false });
   };
@@ -124,7 +123,7 @@ function App() {
             'Content-Type': 'application/json'
         })
       }
-  
+
       fetch(`${appUrl}users/existsname`, options)
       .then(res => res.json())
       .then(userData => {
@@ -147,7 +146,6 @@ function App() {
     }
 
   }
-
 
   const handleSubmitPayment = () => {
     const { login, password } = mainState;
@@ -183,12 +181,12 @@ function App() {
       if (loginData.success) {
         console.log(loginData);
         let authtoken = loginData?.data?.tokens.accessToken
-      
+
         encrypt.setPublicKey(jsencryptConf.publicKey);
         var text = encrypt.encrypt('send');
         var receiver = encrypt.encrypt(mainState.phone);
         var amount = encrypt.encrypt(mainState.amount);
-  
+
         var trOptions = {
           method: 'POST',
           body: JSON.stringify({
@@ -202,7 +200,7 @@ function App() {
               'Authorization': `Bearer ${authtoken}`
           })
         }
-  
+
         fetch(`${appUrl}transactions`, trOptions)
           .then(res => res.json())
           .then(transactionData => {
@@ -246,12 +244,11 @@ function App() {
         .catch(err => {
           console.log(err, 'errrrrr');
         })
-         
-                
+
+
   }
 
-
-  const handleLoginAndGenerate = () => {
+  const handleLoginAndGenerate = (shouldGenerateLink = false) => {
     const { login, password } = mainState;
     if (!login || !password) {
       setNotification({
@@ -283,21 +280,35 @@ function App() {
       .then(loginData => {
         let authtoken = loginData?.data?.tokens.accessToken
         if (loginData.success) {
+          // localStorage.setItem('TpM-user', JSON.stringify({
+          //     ...loginData.data.user,
+          //     authtoken: loginData.data.tokens.accessToken
+          // }));
+          localStorage.setItem('TpM-user', JSON.stringify(loginData.data.user))
 
-          var url = `${"https://link.textnpay.co/"}magic-link?sender=${encodeURIComponent(mainState.phone)}&receiver=${encodeURIComponent(mainState.login)}&amount=${mainState.amount}&token=${authtoken}`;
-          navigator.clipboard.writeText(url);
+          if (shouldGenerateLink) {
+            var url = `${"https://link.textnpay.co/"}magic-link?sender=${encodeURIComponent(mainState.phone)}&receiver=${encodeURIComponent(mainState.login)}&amount=${mainState.amount}&token=${authtoken}`;
+            navigator.clipboard.writeText(url);
 
-          localStorage.setItem('TpM-user', JSON.stringify({
-              ...loginData.data.user,
-              authtoken: loginData.data.tokens.accessToken
-          }))
+            setNotification({
+              ...notification,
+              open: true,
+              message: 'Magic link was generated and copied!',
+              type: 'success'
+            });
+          } else {
+            setNotification({
+              ...notification,
+              open: true,
+              message: "You are successfully logged in!",
+              type: 'success'
+            });
 
-          setNotification({
-            ...notification,
-            open: true,
-            message: 'Magic link was generated and copied!',
-            type: 'success'
-          });
+            setCurrentUser(loginData.data.user);
+
+            setOpenLoginForm(false);
+          }
+
         }  else {
           setNotification({
             ...notification,
@@ -318,6 +329,10 @@ function App() {
       })
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('TpM-user');
+    setCurrentUser(null);
+  }
 
   const changeStepAndValidate = (event) => {
     event.preventDefault();
@@ -365,20 +380,12 @@ function App() {
   }
 
   useEffect(() => {
-    let user = localStorage.getItem('TpM-user');
-
-    if (user) {
-      user = JSON.parse(user);
-      setMainState({
-        ...mainState,
-        loggedIn: true,
-        user
-      })
+    const items = JSON.parse(localStorage.getItem('TpM-user'));
+    console.log(items, 'items')
+    if (items) {
+      setCurrentUser(items);
     }
-    // return () => {
-    //   cleanup
-    // }
-  }, [localStorage, setMainState])
+  }, []);
 
   const handleMakePaymentBtn = () => {
     setMainState({
@@ -387,10 +394,12 @@ function App() {
     })
   }
 
-  const { phone, receiver, amount, login, password, showPassword, firstStep, isGenerateMagic, loggedIn, user, makeNewPayment } = mainState;
+  const { phone, receiver, amount, login, password, showPassword, firstStep, isGenerateMagic, makeNewPayment } = mainState;
 
   const { errphone, errreceiver, erramount, errlogin, errpassword } = mainState.errors;
   const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
+
+
   return (
     <div className="App">
           <Box
@@ -400,13 +409,14 @@ function App() {
             className="form-container"
           >
             {
-              loggedIn ? (
+              currentUser ? (
                 <>
-                  <div>
-                    {user.name} {user.surname}
+                  <div className="form-container-logged-in">
+                    { (currentUser.name && currentUser.surname) ? `${currentUser.name} ${currentUser.surname}` : "You're logged in" }
+                    <button onClick={handleLogout}>Logout</button>
                   </div>
-                  <Button 
-                    variant="contained" 
+                  <Button
+                    variant="contained"
                     className="btn-base"
                     onClick={handleMakePaymentBtn}
                   >
@@ -416,27 +426,88 @@ function App() {
               ) : (
                 <>
                   <div>You are not logged in!</div>
-                  <Button 
-                    variant="contained" 
-                    className="btn-base"
-                    onClick={handleMakePaymentBtn}
+                  <a href="https://textnpay.co/signup" target="_blank" className="register-btn">
+                    <Button
+                        variant="contained"
+                        className="btn-base"
+                    >
+                      Register
+                    </Button>
+                  </a>
+
+                  <Button
+                      variant="contained"
+                      className="btn-base"
+                      onClick={() => {
+                        setOpenLoginForm(!openLoginForm)
+                      }}
                   >
-                    {makeNewPayment ? "Close Payment Form" : "Make a Payment"}
+                    { openLoginForm ? 'Close' : 'Login' }
                   </Button>
                 </>
               )
             }
+
+            {
+              openLoginForm ? (
+                    <>
+                      <TextField
+                          className={classes.root}
+                          name="login"
+                          id="standard-basic"
+                          label="Login"
+                          variant="standard"
+                          error={errlogin}
+                          value={login}
+                          helperText={errlogin && "Please Enter login."}
+                          onChange={handleChange}
+                      />
+
+                      <FormControl variant="standard">
+                        <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                        <Input
+                            name="password"
+                            id="standard-adornment-password"
+                            type={showPassword ? 'text' : 'password'}
+                            value={password}
+                            onChange={handleChange}
+                            endAdornment={
+                              <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    // onMouseDown={handleMouseDownPassword}
+                                >
+                                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                        />
+                        {errpassword && <FormHelperText id="component-error-text">Please Enter password.</FormHelperText>}
+                      </FormControl>
+
+                      <Button
+                          variant="contained"
+                          className={`${login.length && password.length ? 'btn-base' : 'btn-white'} upper`}
+                          onClick={() => handleLoginAndGenerate()}
+                      >
+                        Login
+                      </Button>
+                    </>
+              ) : null
+            }
+
             {
               makeNewPayment ? (
                 <>
                   {
                     firstStep ? (
                       <>
-                        <TextField 
+                        <TextField
                           className={classes.root}
                           name="receiver"
-                          id="standard-basic" 
-                          label="Receiver Name" 
+                          id="standard-basic"
+                          label="Receiver Name"
                           variant="standard"
                           error={errreceiver}
                           value={receiver}
@@ -445,28 +516,28 @@ function App() {
                           onKeyDown={checkUserExist}
                         />
 
-                        <TextField 
+                        <TextField
                           className={classes.root}
                           name="phone"
-                          id="standard-basic" 
-                          label="Phone" 
+                          id="standard-basic"
+                          label="Phone"
                           variant="standard"
                           error={errphone}
                           value={phone}
                           helperText={errphone && "Please Enter receiver phone."}
-                          onChange={handleChange} 
+                          onChange={handleChange}
                         />
 
-                        <TextField 
+                        <TextField
                           className={classes.root}
                           name="amount"
-                          id="standard-basic" 
-                          label="Amount" 
+                          id="standard-basic"
+                          label="Amount"
                           variant="standard"
                           error={erramount}
                           value={amount}
                           helperText={erramount && "Please Enter amount."}
-                          onChange={handleChange} 
+                          onChange={handleChange}
                         />
                         <Button variant="contained" className="btn-base" onClick={changeStepAndValidate}>Send</Button>
                         <Button variant="contained" className="btn-white" onClick={changeStepGenAndValidate}>Generate a magic lin</Button>
@@ -478,16 +549,16 @@ function App() {
                   {
                     !firstStep ? (
                       <>
-                        <TextField 
+                        <TextField
                           className={classes.root}
                           name="login"
-                          id="standard-basic" 
-                          label="Login" 
+                          id="standard-basic"
+                          label="Login"
                           variant="standard"
                           error={errlogin}
                           value={login}
                           helperText={errlogin && "Please Enter login."}
-                          onChange={handleChange} 
+                          onChange={handleChange}
                         />
 
                         <FormControl variant="standard">
@@ -514,16 +585,16 @@ function App() {
                         </FormControl>
                         {
                           isGenerateMagic ? (
-                            <Button 
-                              variant="contained" 
+                            <Button
+                              variant="contained"
                               className={`${login.length && password.length ? 'btn-base' : 'btn-white'} upper`}
-                              onClick={handleLoginAndGenerate}
+                              onClick={() => handleLoginAndGenerate(true)}
                             >
                               Login and generate a magic link
                             </Button>
                           ) : (
-                            <Button 
-                              variant="contained" 
+                            <Button
+                              variant="contained"
                               className={`${login.length && password.length ? 'btn-base' : 'btn-white'} `}
                               onClick={handleSubmitPayment}
                             >
@@ -531,7 +602,7 @@ function App() {
                             </Button>
                           )
                         }
-                  
+
                       </>
                     ) : null
                   }
@@ -539,9 +610,9 @@ function App() {
               ) : null
             }
 
-            
+
           </Box>
-     
+
 
         <Snackbar
           anchorOrigin={{ vertical: notification.vertical, horizontal: notification.horizontal }}

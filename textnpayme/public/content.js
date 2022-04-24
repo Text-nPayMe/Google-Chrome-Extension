@@ -1,5 +1,5 @@
 var jsencryptConf = {
-  "publicKey": "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQAB-----END PUBLIC KEY-----",
+  "publicKeys": "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQAB-----END PUBLIC KEY-----",
   "privateKey": "-----BEGIN RSA PRIVATE KEY-----MIICXQIBAAKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQABAoGAfY9LpnuWK5Bs50UVep5c93SJdUi82u7yMx4iHFMc/Z2hfenfYEzu+57fI4fvxTQ//5DbzRR/XKb8ulNv6+CHyPF31xk7YOBfkGI8qjLoq06V+FyBfDSwL8KbLyeHm7KUZnLNQbk8yGLzB3iYKkRHlmUanQGaNMIJziWOkN+N9dECQQD0ONYRNZeuM8zd8XJTSdcIX4a3gy3GGCJxOzv16XHxD03GW6UNLmfPwenKu+cdrQeaqEixrCejXdAFz/7+BSMpAkEA8EaSOeP5Xr3ZrbiKzi6TGMwHMvC7HdJxaBJbVRfApFrE0/mPwmP5rN7QwjrMY+0+AbXcm8mRQyQ1+IGEembsdwJBAN6az8Rv7QnD/YBvi52POIlRSSIMV7SwWvSK4WSMnGb1ZBbhgdg57DXaspcwHsFV7hByQ5BvMtIduHcT14ECfcECQATeaTgjFnqE/lQ22Rk0eGaYO80cc643BXVGafNfd9fcvwBMnk0iGX0XRsOozVt5AzilpsLBYuApa66NcVHJpCECQQDTjI2AQhFc1yRnCU/YgDnSpJVm1nASoRUnU8Jfm3Ozuku7JUXcVpt08DFSceCEX9unCuMcT72rAQlLpdZir876-----END RSA PRIVATE KEY-----"
 }
 let currentInputElement = document.getElementsByTagName('input')[0];
@@ -17,7 +17,6 @@ var passHidden = `<svg id="TaP-passHiddenElem" class="  MuiSvgIcon-root MuiSvgIc
 if (isExist) {
   currentInputElement = isExist
 }
-
 
 var notificationDiv = document.createElement('div');
 notificationDiv.classList.add('notifications');
@@ -46,23 +45,19 @@ var pushNotification = function (message, color) {
   }, 5000);
 };
 
-
-
 document.addEventListener('focusin', onFocusIn);
-
-
 
 function onFocusIn(event) {
     var el = event.target;
     // console.log(el.getAttribute('aria-label'));
     // document.body.innerHTML = el
-    if ( 
+    if (
           (el.matches('div') && el.getAttribute('aria-label') === 'Message')
           || (el.matches('input') && el.getAttribute('aria-label') === 'Message')
           || (el.matches('input') && el.getAttribute('aria-label') === 'Search' && el.type.match(/email|number|search|text|url/))
           || (el.matches('input') && el.id == 'input')
           || (el.matches('div') && (el.getAttribute('title') === 'Type a message' || el.getAttribute('title') ===  'Введите сообщение'))
-      
+
           // || el.matches('input, textarea') && el.type.match(/email|number|search|text|url/)
       // ||  el.matches('input, textarea') && el.type.match(/email|number|search|text|url/)
       )
@@ -75,27 +70,21 @@ function onFocusIn(event) {
       // changeable DIV element change event lister
       if (currentInputElement.tagName === 'DIV') {
         // var hasChild = document.querySelectorAll('#xyz div')
-        
+
         currentInputElement.addEventListener('keyup', function (event) {
-          if (/((send) ([1-9][0-9]+|[1-9])( |)(dram|amd|֏) (to))|((ուղարկել|փոխանցել|ղրգել|ղարգել) ([1-9][0-9]+|[1-9])( |)(դրամ|֏))|((отправить) ([1-9][0-9]+|[1-9])( |)(драм|֏|драммов))/.test(event.target.textContent)) {
-
-
-            
+          // if (/((send) ([1-9][0-9]+|[1-9])( |)(dram|amd|֏) (to))|((ուղարկել|փոխանցել|ղրգել|ղարգել) ([1-9][0-9]+|[1-9])( |)(դրամ|֏))|((отправить) ([1-9][0-9]+|[1-9])( |)(драм|֏|драммов))/.test(event.target.textContent)) {
+            if (true) {
                 // makeContainerElement.style.display = 'block';
                 appendButton(el);
                 var exist = document.getElementsByClassName('TaP-current-button-container')[0];
-                   
+
                 if (hasGrammerlyElement && hasGrammerlyElement[0]) {
                   exist.style.right = '20px';
                 }
-
                 exist.style.display = 'block'
 
                 domRect = exist.getBoundingClientRect();
                 var formContainer = document.getElementsByClassName('TaP-container')[0]
-                var formFormContainer = document.getElementsByClassName('TaP-container ')[0]
-                
-                var tapButtonYellow = document.getElementById('TaP-buttonevent-yellow');
 
                 if (domRect) {
                   var sidearrow = document.getElementById('sidearrow');
@@ -115,7 +104,7 @@ function onFocusIn(event) {
                       sidearrow.classList.add('_1oFOe');
                       sidearrow.classList.remove('_1oFOa');
                     }
-            
+
 
                     formContainer.style.transform = 'translate(-100%, -100%)';
 
@@ -133,7 +122,7 @@ function onFocusIn(event) {
                 }
 
 
-          }   else {
+          } else {
             var exist = document.getElementsByClassName('TaP-current-button-container')[0];
 
             if (exist) {
@@ -149,15 +138,16 @@ function onFocusIn(event) {
       if (currentInputElement.tagName === 'INPUT') {
         // console.log('input tag changes');
         currentInputElement.addEventListener('input', function(event) {
+            console.log('inout')
           // console.log(event.target.value, 'event');
           // console.log(event.target.value, 'event');
-          if (/((send) ([1-9][0-9]+|[1-9])( |)(dram|amd|֏) (to))|((ուղարկել|փոխանցել|ղրգել|ղարգել) ([1-9][0-9]+|[1-9])( |)(դրամ|֏))|((отправить) ([1-9][0-9]+|[1-9])( |)(драм|֏|драммов))/.test(event.target.value)) {
-          // if (true) {
-              appendButton(el);              
+          // if (/((send) ([1-9][0-9]+|[1-9])( |)(dram|amd|֏) (to))|((ուղարկել|փոխանցել|ղրգել|ղարգել) ([1-9][0-9]+|[1-9])( |)(դրամ|֏))|((отправить) ([1-9][0-9]+|[1-9])( |)(драм|֏|драммов))/.test(event.target.value)) {
+          if (true) {
+              appendButton(el);
 
               var exist = document.getElementsByClassName('TaP-current-button-container')[0];
               exist.style.display = 'block'
-      
+
               domRect = exist.getBoundingClientRect();
               var formContainer = document.getElementsByClassName('TaP-container')[0]
 
@@ -168,7 +158,7 @@ function onFocusIn(event) {
                     sidearrow.classList.remove('_1oFOe');
                     sidearrow.classList.add('_1oFOa');
                   }
-      
+
                   formContainer.style.top = `${domRect.top + 7}px`;
                   formContainer.style.left = `${domRect.left + 25}px`;
                   formContainer.style.right = 'initial'
@@ -178,10 +168,10 @@ function onFocusIn(event) {
                     sidearrow.classList.add('_1oFOe');
                     sidearrow.classList.remove('_1oFOa');
                   }
-        
-      
+
+
                   formContainer.style.transform = 'translate(-100%, -100%)';
-      
+
                   formContainer.style.top = `${domRect.top + 14}px`
                   formContainer.style.left = `${domRect.left + 7}px`
                   formContainer.style.right = 'initial'
@@ -196,14 +186,13 @@ function onFocusIn(event) {
           }
         });
       }
-        
+
     }
 }
 
-
 function appendButton(textElement) {
     var exist = document.getElementById('TaP-container');
-
+    console.log(exist)
     if (!exist) {
       textElement.parentNode.style.position = 'relative';
       textElement.parentNode.style.overflow = 'initial';
@@ -212,7 +201,7 @@ function appendButton(textElement) {
       // if (isExistFormButton) return false
 
       textElement.parentNode.appendChild(createFormAndMainButton());
-      
+
       addMainFunctionality()
     }
 }
@@ -220,11 +209,11 @@ function appendButton(textElement) {
 
 // State and main
 
-  var state = {
+var state = {
       open: false,
       cloudImagesUrl: `https://i.ibb.co/`,
-      // appUrl: 'https://d-api.textnpay.co/',
-      appUrl: 'http://localhost:3000/',
+      appUrl: 'https://d-api.textnpay.co/',
+      // appUrl: 'http://localhost:3000/',
       receiver: '',
       phone: '',
       amount: '',
@@ -239,129 +228,196 @@ function appendButton(textElement) {
       loginError: null,
       passcodeVisible: false
   }
-    
+
 function createFormAndMainButton() {
     var makeContainerElement = document.createElement('div');
     makeContainerElement.classList.add('TaP-container');
-    makeContainerElement.classList.add('hidden-form');
+    // makeContainerElement.classList.add('hidden-form');
     makeContainerElement.setAttribute('id', 'TaP-container')
-    
-    
+
+
   // **************** HTML
-    // h
     makeContainerElement.innerHTML = `
         <div class="_1oFOe" id="sidearrow">▲</div>
-        <form>
-            <div class="TaP-FormControl-root formstep-1">
-                <label class="TaP-InputLabel-root" for="receiverElement" id="receiverElementLabel">
-                    Receiver’s name
-                </label>
-                <div class="TaP-Input-root">
-                    <input 
-                        name="receiver"
-                        type="text" 
-                        id="receiverElement" 
-                        class="TaP-Input-input" 
-                        value="" 
-                    />
-                    ${svgCheckIcon}
-                </div>
-                <div class="error-message">Please Enter receiver name</div>
-            </div>
-    
-            <div class="TaP-FormControl-root formstep-1">
-                <label class="TaP-InputLabel-root" for="phoneElement" id="phoneElementLabel">
-                    Mobile phone number
-                </label>
-                <div class="TaP-Input-root">
-                    <input 
-                        name="phone"
-                        type="text" 
-                        id="phoneElement" 
-                        class="TaP-Input-input" 
-                        value="" 
-                    />
-                    ${svgCheckIcon}
-                </div>
-                <div class="error-message">Please Enter receiver phone</div>
-            </div>
-    
-            <div class="TaP-FormControl-root formstep-1">
-                <label class="TaP-InputLabel-root" for="amountElement" id="amountElementLabel">
-                    Amount (AMD)
-                </label>
-                <div class="TaP-Input-root">
-                    <input
-                        name="amount"
-                        type="number" 
-                        id="amountElement" 
-                        class="TaP-Input-input" 
-                        value="" 
-                    />
-                    ${svgCheckIcon}
-                </div>
-                <div class="error-message">Please Enter amount</div>
-            </div>
-
-            <div class="TaP-FormControl-root formstep-2">
-                <label class="TaP-InputLabel-root" for="senderElement" id="senderElementLabel">
-                    Your phone number
-                </label>
-                <div class="TaP-Input-root">
-                    <input 
-                        name="phone"
-                        type="text" 
-                        id="senderElement" 
-                        class="TaP-Input-input" 
-                        value="" 
-                    />
-                    ${svgCheckIcon}
-                </div>
-                <div class="error-message">Please Enter your phone</div>
-            </div>
-    
-            <div class="TaP-FormControl-root formstep-2">
-                <label class="TaP-InputLabel-root" for="passcodeElement" id="passcodeElementLabel">
-                    Enter your passcode
-                </label>
-                <div class="TaP-Input-root">
-                    <input
-                        name="passcode"
-                        type="password" 
-                        id="passcodeElement" 
-                        class="TaP-Input-input" 
-                        value="" 
-                    />
-                    <div class="TaP-passcode-button-container" id="TaP-passCodeVisibleBtn">
-                      ${passShow}
-                      ${passHidden}
+        <div class="form">
+            <div id="logged-out">
+                <!--    Logged out    -->
+                <div class="login-head">You are not logged in!</div>
+                <a href="https://textnpay.co/signup" target="_blank">
+                    <button class="TaP-button btn-static register-btn">
+                      Register
+                    </button>
+                </a>
+       
+                <button class="TaP-button btn-static login-form-btn" id="toggleLogin">
+                  Login
+                </button>
+                
+                <div class="login-form d-none">
+                     <div class="TaP-FormControl-root">
+                        <label class="TaP-InputLabel-root" for="loginElement" id="loginElementLabel">
+                            Login
+                        </label>
+                        <div class="TaP-Input-root">
+                            <input 
+                                name="login"
+                                type="text" 
+                                id="loginElement" 
+                                class="TaP-Input-input" 
+                                value="" 
+                            />
+                            ${svgCheckIcon}
+                        </div>
+                        <div class="error-message">Please Enter your phone</div>
                     </div>
-                    ${svgCheckIcon}
+            
+                    <div class="TaP-FormControl-root">
+                        <label class="TaP-InputLabel-root" for="passwordElement" id="passwordElementLabel">
+                            Password
+                        </label>
+                        <div class="TaP-Input-root">
+                            <input
+                                name="password"
+                                type="password" 
+                                id="passwordElement" 
+                                class="TaP-Input-input" 
+                                value="" 
+                            />
+                            <div class="TaP-passcode-button-container" id="TaP-passCodeVisibleBtn">
+                              ${passShow}
+                              ${passHidden}
+                            </div>
+                            ${svgCheckIcon}
+                        </div>
+                        <div class="error-message">Please Enter passcode</div>
+                    </div>
+                    
+                    <button class="TaP-button btn-static login-form-btn" id="handle-login">
+                      Login
+                    </button>
                 </div>
-                <div class="error-message">Please Enter passcode</div>
             </div>
-    
-            <button class="TaP-button btn-static send-btn formstep-1">
-              Send
-            </button>
-            <button class="TaP-button btn-white generate-btn formstep-1">
-              Generate a magic link
-            </button>
-            <button class="TaP-button btn-white approve-btn formstep-2 ">
-              Approve the payment
-            </button>
-            <button class="TaP-button btn-white logingenerate-btn formstep-2 ">
-              Login and generate a magic link
-            </button>
-          
-            <button class="TaP-button btn-white receipt-btn formstep-2 d-none">
-              Copy the payment receipt link
-            </button>
-
-            <button class="TaP-button btn-white reset-btn formstep-2 d-none">
-              Make a new payment
-            </button>
-        </form>
+            <!--     Logged In       -->
+            <div id="logged-in">
+                <div>You're logged in <button id="logout-btn">Logout</button></div>
+                <button class="TaP-button btn-static login-form-btn" id="handle-make-new-payment">
+                  Make a Payment
+                </button>
+            </div>
+            
+            <div class="d-none" id="make-new-payment">
+                <div class="TaP-FormControl-root formstep-1">
+                    <label class="TaP-InputLabel-root" for="receiverElement" id="receiverElementLabel">
+                        Receiver’s name
+                    </label>
+                    <div class="TaP-Input-root">
+                        <input 
+                            name="receiver"
+                            type="text" 
+                            id="receiverElement" 
+                            class="TaP-Input-input" 
+                            value="" 
+                        />
+                        ${svgCheckIcon}
+                    </div>
+                    <div class="error-message">Please Enter receiver name</div>
+                    <div class="note">You can find receiver name from contact list</div>
+                </div>
+        
+                <div class="TaP-FormControl-root formstep-1">
+                    <label class="TaP-InputLabel-root" for="phoneElement" id="phoneElementLabel">
+                        Mobile phone number
+                    </label>
+                    <div class="TaP-Input-root">
+                        <input 
+                            name="phone"
+                            type="text" 
+                            id="phoneElement" 
+                            class="TaP-Input-input" 
+                            value="" 
+                        />
+                        ${svgCheckIcon}
+                    </div>
+                    <div class="error-message">Please Enter receiver phone</div>
+                </div>
+        
+                <div class="TaP-FormControl-root formstep-1">
+                    <label class="TaP-InputLabel-root" for="amountElement" id="amountElementLabel">
+                        Amount (AMD)
+                    </label>
+                    <div class="TaP-Input-root">
+                        <input
+                            name="amount"
+                            type="number" 
+                            id="amountElement" 
+                            class="TaP-Input-input" 
+                            value="" 
+                        />
+                        ${svgCheckIcon}
+                    </div>
+                    <div class="error-message">Please Enter amount</div>
+                </div>
+        
+                <div class="TaP-FormControl-root formstep-2">
+                    <label class="TaP-InputLabel-root" for="senderElement" id="senderElementLabel">
+                        Your phone number
+                    </label>
+                    <div class="TaP-Input-root">
+                        <input 
+                            name="phone"
+                            type="text" 
+                            id="senderElement" 
+                            class="TaP-Input-input" 
+                            value="" 
+                        />
+                        ${svgCheckIcon}
+                    </div>
+                    <div class="error-message">Please Enter your phone</div>
+                </div>
+        
+                <div class="TaP-FormControl-root formstep-2">
+                    <label class="TaP-InputLabel-root" for="passcodeElement" id="passcodeElementLabel">
+                        Enter your passcode
+                    </label>
+                    <div class="TaP-Input-root">
+                        <input
+                            name="passcode"
+                            type="password" 
+                            id="passcodeElement" 
+                            class="TaP-Input-input" 
+                            value="" 
+                        />
+                        <div class="TaP-passcode-button-container" id="TaP-passCodeVisibleBtn">
+                          ${passShow}
+                          ${passHidden}
+                        </div>
+                        ${svgCheckIcon}
+                    </div>
+                    <div class="error-message">Please Enter passcode</div>
+                </div>
+        
+                <button class="TaP-button btn-static send-btn formstep-1">
+                  Send
+                </button>
+                <button class="TaP-button btn-white generate-btn formstep-1">
+                  Generate a magic link
+                </button>
+                <button class="TaP-button btn-white approve-btn formstep-2 ">
+                  Approve the payment
+                </button>
+                <button class="TaP-button btn-white logingenerate-btn formstep-2 ">
+                  Login and generate a magic link
+                </button>
+              
+                <button class="TaP-button btn-white receipt-btn formstep-2 d-none">
+                  Copy the payment receipt link
+                </button>
+        
+                <button class="TaP-button btn-white reset-btn formstep-2 d-none">
+                  Make a new payment
+                </button>
+            </div>
+        </div>
     `
 
     var curElemBtn = document.createElement('div')
@@ -373,11 +429,24 @@ function createFormAndMainButton() {
     // **************** END HTML
     // makeContainerElement.style.display = 'none';
 
- 
+
  // **************** CSS
   var css = `
+        * {
+            font-family: "Roboto","Helvetica","Arial",sans-serif;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .note {
+            font-size: 12px;
+            color: orange;
+        }
+        
         .TaP-container {
-            height: min-content;
+            height: max-content;
             position: absolute;
             right: 0;
             top: -5px;
@@ -391,6 +460,10 @@ function createFormAndMainButton() {
           transform: rotate(-30deg) scale(1.7);
           color: #fff;
           display: none;
+        }
+        
+        .login-head {
+            margin-bottom: 10px;
         }
 
         ._1oFOa {
@@ -497,7 +570,7 @@ function createFormAndMainButton() {
     
             box-sizing: border-box;
             width: 340px;
-            min-height: 170px;
+            min-height: auto;
             display: flex;
             flex-direction: row;
             align-items: flex-start;
@@ -505,6 +578,12 @@ function createFormAndMainButton() {
             background: #FFFFFF;
             box-shadow: 1px 1px 40px rgba(26, 26, 26, 0.1);
             border-radius: 24px;
+        }
+        
+        #logged-in > div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
     
         div .formstep-2 {
@@ -523,7 +602,11 @@ function createFormAndMainButton() {
             transition: visibility 0s, opacity 0.5s linear;
         }
     
-        .TaP-form-container form {
+        .TaP-form-container .form {
+            width: 100%;
+        }
+        
+        .TaP-container .form {
             width: 100%;
         }
     
@@ -837,7 +920,7 @@ function createFormAndMainButton() {
         }
         
     `;
-    
+
   var head = document.head || document.getElementsByTagName('head')[0];
   var style = document.createElement('style');
   head.appendChild(style);
@@ -863,7 +946,7 @@ function createFormAndMainButton() {
 
 
   // head.appendChild(scriptJQuery);
-  
+
   style.type = 'text/css';
   if (style.styleSheet){
     // This is required for IE8 and below.
@@ -872,7 +955,7 @@ function createFormAndMainButton() {
     style.appendChild(document.createTextNode(css));
   }
   //   **************** CSS
-  
+
 
   // document.body.appendChild(makeContainerElement)
   document.body.appendChild(makeContainerElement)
@@ -880,10 +963,17 @@ function createFormAndMainButton() {
 
   return curElemBtn
 }
-    
 
-    
-  function addMainFunctionality () {
+function addMainFunctionality () {
+    var loggedOutPart = document.getElementById('logged-out');
+    var loggedInPart = document.getElementById('logged-in');
+    var currentUser = localStorage.getItem('TpM-user');
+    if (currentUser) {
+        loggedOutPart.classList.add('d-none');
+    } else {
+        loggedInPart.classList.add('d-none');
+    }
+
     var encrypt = new JSEncrypt();
     var decrypt = new JSEncrypt();
 
@@ -891,19 +981,25 @@ function createFormAndMainButton() {
 
     var receiverElement = document.getElementById('receiverElement');
     var receiverElementLabel = document.getElementById('receiverElementLabel');
-    
+
     var phoneElement = document.getElementById('phoneElement');
     var phoneElementLabel = document.getElementById('phoneElementLabel');
 
     var senderElement = document.getElementById('senderElement');
     var senderElementLabel = document.getElementById('senderElementLabel');
-    
+
     var amountElement = document.getElementById('amountElement');
     var amountElementLabel = document.getElementById('amountElementLabel');
-    
+
     var passcodeElement = document.getElementById('passcodeElement');
     var passcodeElementLabel = document.getElementById('passcodeElementLabel');
-    
+
+    var loginElement = document.getElementById('loginElement');
+    var loginElementLabel = document.getElementById('loginElementLabel');
+
+    var passwordElement = document.getElementById('passwordElement');
+    var passwordElementLabel = document.getElementById('passwordElementLabel');
+
 
   //   receiver
     receiverElement.addEventListener('input', function() {
@@ -921,10 +1017,10 @@ function createFormAndMainButton() {
           // receiverElement.parentNode.querySelector('.check-icon').classList.add('d-none');
       }
     });
-    receiverElement.addEventListener('focus', function(event) { 
+    receiverElement.addEventListener('focus', function(event) {
         receiverElementLabel.classList.add('label-focus');
         receiverElementLabel.parentNode.classList.add('input-focused');
-          
+
       });
     receiverElement.addEventListener('blur', function(event) {
       if (!state.receiver.length) {
@@ -947,9 +1043,9 @@ function createFormAndMainButton() {
 
     });
   //   receiver end
-    
+
   //   phone
-    phoneElement.addEventListener('input', function() { 
+    phoneElement.addEventListener('input', function() {
       state.phone = phoneElement.value;
 
       if (phoneElement.value.length) {
@@ -991,25 +1087,21 @@ function createFormAndMainButton() {
   // phone end
 
   //   sender
-  senderElement.addEventListener('input', function() { 
-    state.sender = senderElement.value; 
+  senderElement.addEventListener('input', function() {
+    state.sender = senderElement.value;
     if (senderElement.value.length) {
       senderElementLabel.parentNode.classList.remove('input-error');
       senderElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
-
-      // senderElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
     } else {
       senderElementLabel.parentNode.classList.add('input-error');
       senderElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
-
-      // senderElement.parentNode.querySelector('.check-icon').classList.add('d-none');
     }
   });
   senderElement.addEventListener('focus', function() {
       senderElementLabel.classList.add('label-focus')
       senderElementLabel.parentNode.classList.add('input-focused');
     });
-    senderElement.addEventListener('blur', function(event) {
+  senderElement.addEventListener('blur', function(event) {
     if (!state.sender.length) {
       senderElementLabel.classList.remove('label-focus')
     }
@@ -1030,9 +1122,43 @@ function createFormAndMainButton() {
     }
   });
   // sender end
-    
-  // amount    
-    amountElement.addEventListener('input', function() { 
+    loginElement.addEventListener('input', function() {
+        state.login = loginElement.value;
+        if (loginElement.value.length) {
+            loginElementLabel.parentNode.classList.remove('input-error');
+            loginElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+        } else {
+            loginElementLabel.parentNode.classList.add('input-error');
+            loginElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+        }
+    });
+    loginElement.addEventListener('focus', function() {
+        loginElementLabel.classList.add('label-focus')
+        loginElementLabel.parentNode.classList.add('input-focused');
+    });
+    loginElement.addEventListener('blur', function(event) {
+        if (!state.login.length) {
+            loginElementLabel.classList.remove('label-focus')
+        }
+        loginElementLabel.parentNode.classList.remove('input-focused');
+
+        state.login = event.target.value;
+
+        if (event.target.value.length) {
+            loginElementLabel.parentNode.classList.remove('input-error');
+            loginElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+            loginElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+        } else {
+            loginElementLabel.parentNode.classList.add('input-error');
+            loginElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+            loginElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+        }
+    });
+
+  // amount
+    amountElement.addEventListener('input', function() {
       state.amount = amountElement.value;
 
       if (amountElement.value.length) {
@@ -1070,31 +1196,28 @@ function createFormAndMainButton() {
           amountElement.parentNode.querySelector('.check-icon').classList.add('d-none');
       }
     });
-    // amount end   
-    
+    // amount end
+
     var approveBtn = document.getElementsByClassName('approve-btn')[0];
     var receiptBtn = document.getElementsByClassName('receipt-btn')[0];
     var resetBtn = document.getElementsByClassName('reset-btn')[0];
     var logingenerateBtn = document.getElementsByClassName('logingenerate-btn')[0];
 
-    passcodeElement.addEventListener('input', function() { 
+    passcodeElement.addEventListener('input', function() {
       state.passcode = passcodeElement.value
+      state.password = passcodeElement.value
       if (passcodeElement.value.length) {
         approveBtn.classList.add('btn-static');
         logingenerateBtn.classList.add('btn-static');
 
         passcodeElementLabel.parentNode.classList.remove('input-error');
         passcodeElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
-
-        // passcodeElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
       } else {
         approveBtn.classList.remove('btn-static');
         logingenerateBtn.classList.remove('btn-static');
 
         passcodeElementLabel.parentNode.classList.add('input-error');
         passcodeElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
-
-        // passcodeElement.parentNode.querySelector('.check-icon').classList.add('d-none');
       }
     });
     passcodeElement.addEventListener('focus', function() {
@@ -1108,6 +1231,7 @@ function createFormAndMainButton() {
       passcodeElementLabel.parentNode.classList.remove('input-focused');
 
       state.passcode = event.target.value;
+      state.password = event.target.value;
 
       if (event.target.value.length) {
           passcodeElementLabel.parentNode.classList.remove('input-error');
@@ -1120,18 +1244,48 @@ function createFormAndMainButton() {
 
           passcodeElement.parentNode.querySelector('.check-icon').classList.add('d-none');
       }
-    });  
+    });
 
+    passwordElement.addEventListener('input', function() {
+        state.password = passwordElement.value
+        if (passwordElement.value.length) {
+            passwordElementLabel.parentNode.classList.remove('input-error');
+            passwordElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+        } else {
+            passwordElementLabel.parentNode.classList.add('input-error');
+            passwordElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+        }
+    });
+    passwordElement.addEventListener('focus', function() {
+        passwordElementLabel.classList.add('label-focus');
+        passwordElementLabel.parentNode.classList.add('input-focused');
+    });
+    passwordElement.addEventListener('blur', function(event) {
+        if (!state.password.length) {
+            passwordElementLabel.classList.remove('label-focus');
+        }
+        passwordElementLabel.parentNode.classList.remove('input-focused');
 
-    
+        state.password = event.target.value;
+
+        if (event.target.value.length) {
+            passwordElementLabel.parentNode.classList.remove('input-error');
+            passwordElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '0';
+
+            passwordElement.parentNode.querySelector('.check-icon').classList.remove('d-none');
+        } else {
+            passwordElementLabel.parentNode.classList.add('input-error');
+            passwordElementLabel.parentNode.getElementsByClassName('error-message')[0].style.opacity = '1';
+
+            passwordElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+        }
+    });
+
     var tapFormContainer = document.getElementsByClassName('TaP-container')[0];
     var tapButton = document.getElementById('TaP-button');
     var tapButtonYellow = document.getElementById('TaP-button-yellow');
 
     function addReceiverIfExist (){
-      
-      console.log(currentInputElement.value, 'currentInputElement');
-      console.log(currentInputElement.innerHTML, 'currentInputElement');
       var str = currentInputElement.value || '';
 
       var getAmount = str.split(/ուղարկել|փոխանցել|ղրգել|ղարգել|send/)[1]
@@ -1160,7 +1314,7 @@ function createFormAndMainButton() {
 
       if (getReceiver) {
         var receiverElement = document.getElementById('receiverElement');
-        var receiverElementLabel = document.getElementById('receiverElementLabel');  
+        var receiverElementLabel = document.getElementById('receiverElementLabel');
 
         var phoneElement = document.getElementById('phoneElement');
         var phoneElementLabel = document.getElementById('phoneElementLabel');
@@ -1189,29 +1343,26 @@ function createFormAndMainButton() {
         }
       }
     }
-
-
-
     // var formBtn = document.getElementsByClassName('TaP-form-btn')[1];
     // console.log(tapButtonYellow, 'tapButtonYellow');
     tapButtonYellow.parentNode.addEventListener('click', function() {
       if (state.open) {
         tapButton.classList.remove('hidden-img');
         tapButtonYellow.classList.add('hidden-img');
-    
+
         tapFormContainer.classList.add("hidden-form");
         tapFormContainer.classList.remove("visible-form");
-    
+
         state.open = false;
       } else {
         addReceiverIfExist()
 
         tapButton.classList.add('hidden-img');
         tapButtonYellow.classList.remove('hidden-img');
-    
+
         tapFormContainer.classList.remove("hidden-form");
         tapFormContainer.classList.add("visible-form");
-    
+
         state.open = true;
       }
     });
@@ -1234,11 +1385,10 @@ function createFormAndMainButton() {
       }
     });
 
-    
     var sendBtn = document.getElementsByClassName('send-btn')[0];
     var formStepOneItems = document.getElementsByClassName('formstep-1');
     var formStepTwoItems = document.getElementsByClassName('formstep-2');
-    
+
     sendBtn.addEventListener('click', function(event) {
       event.preventDefault();
 
@@ -1246,11 +1396,11 @@ function createFormAndMainButton() {
         pushNotification('Please fill all fields!', 'normal');
         return;
       }
-    
+
       Array.prototype.forEach.call(formStepOneItems, element => {
         element.style.display = 'none';
       });
-    
+
       Array.prototype.forEach.call(formStepTwoItems, element => {
         element.style.display = 'inline-flex';
       });
@@ -1271,13 +1421,13 @@ function createFormAndMainButton() {
       Array.prototype.forEach.call(formStepOneItems, element => {
         element.style.display = 'none';
       });
-    
+
       Array.prototype.forEach.call(formStepTwoItems, element => {
         element.style.display = 'inline-flex';
       });
 
       approveBtn.style.display = 'none';
-      
+
     });
 
     logingenerateBtn.addEventListener('click', function(event) {
@@ -1342,12 +1492,9 @@ function createFormAndMainButton() {
       pushNotification(`Receipt URL was copied`, 'green');
     });
 
-
     receiverElement.addEventListener('keypress', function(event) {
-
       if (event.key === "Enter") {
         event.preventDefault();
-        console.log(event.target.value);
         var options = {
           method: 'PATCH',
           body: JSON.stringify({
@@ -1360,7 +1507,7 @@ function createFormAndMainButton() {
 
         fetch(`${state.appUrl}users/existsname`, options)
         .then(res => res.json())
-        .then(userData => { 
+        .then(userData => {
           if (userData.success && Object.keys(userData.data).length) {
             state.phone = userData.data.phone;
             state.receiver = userData.data.name;
@@ -1402,12 +1549,12 @@ function createFormAndMainButton() {
         if (loginData.success) {
           console.log(loginData);
           state.authtoken = loginData?.data?.tokens.accessToken
-        
+
           encrypt.setPublicKey(jsencryptConf.publicKey);
           var text = encrypt.encrypt('send');
           var receiver = encrypt.encrypt(state.phone);
           var amount = encrypt.encrypt(state.amount);
-    
+
           var trOptions = {
             method: 'POST',
             body: JSON.stringify({
@@ -1421,7 +1568,7 @@ function createFormAndMainButton() {
                 'Authorization': `Bearer ${state.authtoken}`
             })
           }
-    
+
           fetch(`${state.appUrl}transactions`, trOptions)
             .then(res => res.json())
             .then(transactionData => {
@@ -1450,7 +1597,7 @@ function createFormAndMainButton() {
                       approveBtn.style.pointerEvents = 'none';
                       receiptBtn.classList.remove('d-none');
                       resetBtn.classList.remove('d-none');
-                      
+
                       state.receiptUrl = approvedTransactionData.data.url;
                       pushNotification(`Transaction ${approvedTransactionData.data.transaction.id} successfully completed!`, 'green');
                     } else {
@@ -1459,7 +1606,7 @@ function createFormAndMainButton() {
                   }).catch(err => {
                     pushNotification(err, 'red')
                   });
-                
+
 
               } else {
                 pushNotification(loginData.error, 'red');
@@ -1480,7 +1627,111 @@ function createFormAndMainButton() {
       })
     });
 
+    var toggleLogin = document.getElementById('toggleLogin');
+    var loginForm = document.getElementsByClassName('login-form')[0];
+    var handleLogin = document.getElementById('handle-login');
+    toggleLogin.addEventListener('click', function (event) {
+        console.log(loginForm, 'loginForm')
+        if (loginForm.classList.contains("d-none")) {
+            loginForm.classList.remove('d-none');
+            toggleLogin.innerText = 'Close';
+        } else {
+            loginForm.classList.add('d-none');
+            toggleLogin.innerText = 'Login';
+        }
+    });
 
+    handleLogin.addEventListener('click', function(event) {
+        event.preventDefault();
+        encrypt.setPublicKey(jsencryptConf.publicKey);
+        var login = encrypt.encrypt(state.login);
+        var password = encrypt.encrypt(state.password);
+        var options = {
+            method: 'POST',
+            body: JSON.stringify({
+                phone: login || state.login,
+                password: password || state.password
+            }),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        }
+
+        fetch(`${state.appUrl}users/login`, options)
+            .then(res => res.json())
+            .then(loginData => {
+                if (loginData.success) {
+                    state.authtoken = loginData?.data?.tokens.accessToken;
+                    localStorage.setItem('TpM-user', JSON.stringify(loginData.data.user))
+                    state = {
+                        ...state,
+                        open: false,
+                        receiver: '',
+                        phone: '',
+                        amount: '',
+                        sender: '',
+                        authtoken: '',
+                        passcode: '',
+                        formStep: 1,
+                        error: {
+                            type: '',
+                            message: ''
+                        },
+                        loginError: null
+                    }
+                    loggedOutPart.classList.add('d-none');
+                    loggedInPart.classList.remove('d-none');
+                } else {
+                    pushNotification(loginData.error, 'red');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                pushNotification(err, 'red');
+            })
+    });
+
+    var toggleMakeNewPayment = document.getElementById('handle-make-new-payment');
+    var makeNewPaymentForm = document.getElementById('make-new-payment');
+    var logoutBtn = document.getElementById('logout-btn');
+    toggleMakeNewPayment.addEventListener('click', function (event) {
+        if (makeNewPaymentForm.classList.contains("d-none")) {
+            makeNewPaymentForm.classList.remove('d-none');
+            toggleMakeNewPayment.innerText = 'Close payment form';
+        } else {
+            makeNewPaymentForm.classList.add('d-none');
+            toggleMakeNewPayment.innerText = 'Make new payment';
+        }
+    });
+
+    logoutBtn.addEventListener('click', function (event) {
+        localStorage.removeItem('TpM-user');
+        makeNewPaymentForm.classList.add('d-none');
+        loggedInPart.classList.add('d-none');
+        loggedOutPart.classList.remove('d-none');
+        state = {
+            ...state,
+            open: false,
+            receiver: '',
+            phone: '',
+            amount: '',
+            sender: '',
+            authtoken: '',
+            passcode: '',
+            formStep: 1,
+            error: {
+                type: '',
+                message: ''
+            },
+            loginError: null
+    }
+        senderElement.value = '';
+        senderElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+        senderElementLabel.classList.remove('label-focus');
+        passcodeElement.value = '';
+        passcodeElement.parentNode.querySelector('.check-icon').classList.add('d-none');
+        passcodeElementLabel.classList.remove('label-focus');
+    });
 
     // handle clock outside
 
@@ -1496,6 +1747,5 @@ function createFormAndMainButton() {
         }
       }
     });
-
     }
 

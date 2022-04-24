@@ -17,6 +17,11 @@ div input:-internal-autofill-selected {
     padding: 20px;
 }
 
+.form-container-logged-in {
+    display: flex;
+    justify-content: space-between;
+}
+
 .btn-base {
     background-color: #FFAC30 !important;
     box-shadow: inherit !important;
@@ -30,7 +35,7 @@ div input:-internal-autofill-selected {
 .btn-white {
     background-color: white !important;
     box-shadow: inherit !important;
-    border: 2px solid lightgray !important;
+    border: 1px solid lightgray !important;
     color: black !important;
 }
 
@@ -42,3 +47,18 @@ div input:-internal-autofill-selected {
     text-transform: unset !important;
     font-size: 15px !important;
 }
+
+.register-btn {
+    text-decoration: none;
+}
+
+.register-btn button {
+    width: 100%;
+}
+
+button {
+    text-transform: inherit !important;
+    color: #1A1A1A !important;
+    font-weight: 500;
+}
+
