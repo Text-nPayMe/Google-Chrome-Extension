@@ -72,8 +72,8 @@ function onFocusIn(event) {
         // var hasChild = document.querySelectorAll('#xyz div')
 
         currentInputElement.addEventListener('keyup', function (event) {
-          // if (/((send) ([1-9][0-9]+|[1-9])( |)(dram|amd|֏) (to))|((ուղարկել|փոխանցել|ղրգել|ղարգել) ([1-9][0-9]+|[1-9])( |)(դրամ|֏))|((отправить) ([1-9][0-9]+|[1-9])( |)(драм|֏|драммов))/.test(event.target.textContent)) {
-            if (true) {
+          if (/((send) ([1-9][0-9]+|[1-9])( |)(dram|amd|֏) (to))|((ուղարկել|փոխանցել|ղրգել|ղարգել) ([1-9][0-9]+|[1-9])( |)(դրամ|֏))|((отправить) ([1-9][0-9]+|[1-9])( |)(драм|֏|драммов))/.test(event.target.textContent)) {
+            // if (true) {
                 // makeContainerElement.style.display = 'block';
                 appendButton(el);
                 var exist = document.getElementsByClassName('TaP-current-button-container')[0];
@@ -138,11 +138,10 @@ function onFocusIn(event) {
       if (currentInputElement.tagName === 'INPUT') {
         // console.log('input tag changes');
         currentInputElement.addEventListener('input', function(event) {
-            console.log('inout')
           // console.log(event.target.value, 'event');
           // console.log(event.target.value, 'event');
-          // if (/((send) ([1-9][0-9]+|[1-9])( |)(dram|amd|֏) (to))|((ուղարկել|փոխանցել|ղրգել|ղարգել) ([1-9][0-9]+|[1-9])( |)(դրամ|֏))|((отправить) ([1-9][0-9]+|[1-9])( |)(драм|֏|драммов))/.test(event.target.value)) {
-          if (true) {
+          if (/((send) ([1-9][0-9]+|[1-9])( |)(dram|amd|֏) (to))|((ուղարկել|փոխանցել|ղրգել|ղարգել) ([1-9][0-9]+|[1-9])( |)(դրամ|֏))|((отправить) ([1-9][0-9]+|[1-9])( |)(драм|֏|драммов))/.test(event.target.value)) {
+          // if (true) {
               appendButton(el);
 
               var exist = document.getElementsByClassName('TaP-current-button-container')[0];
@@ -232,7 +231,7 @@ var state = {
 function createFormAndMainButton() {
     var makeContainerElement = document.createElement('div');
     makeContainerElement.classList.add('TaP-container');
-    // makeContainerElement.classList.add('hidden-form');
+    makeContainerElement.classList.add('hidden-form');
     makeContainerElement.setAttribute('id', 'TaP-container')
 
 
@@ -1289,7 +1288,6 @@ function addMainFunctionality () {
       var str = currentInputElement.value || '';
 
       var getAmount = str.split(/ուղարկել|փոխանցել|ղրգել|ղարգել|send/)[1]
-      console.log(getAmount, 'getAmount');
       if (getAmount) {
 
         var amountElement = document.getElementById('amountElement');
@@ -1661,8 +1659,9 @@ function addMainFunctionality () {
             .then(res => res.json())
             .then(loginData => {
                 if (loginData.success) {
+                    var encryptedLocalData = loginData.data.user.phone
                     state.authtoken = loginData?.data?.tokens.accessToken;
-                    localStorage.setItem('TpM-user', JSON.stringify(loginData.data.user))
+                    localStorage.setItem('TpM-user', JSON.stringify({ user: encryptedLocalData }))
                     state = {
                         ...state,
                         open: false,

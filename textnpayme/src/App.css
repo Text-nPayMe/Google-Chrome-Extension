@@ -7,6 +7,28 @@ div input:-internal-autofill-selected {
     background-color: transparent !important;
 }
 
+input {
+    padding-right: 5px !important;
+}
+
+label.Mui-focused {
+    color: orange !important;
+}
+.MuiInput-root:hover:not(.Mui-disabled):before {
+    border-bottom: 1px solid orange !important;
+}
+.MuiInput-underline:after {
+    border-bottom: 1px solid orange !important;
+}
+
+.MuiFilledInput-underline:after {
+    border-bottom: 1px solid orange !important;
+}
+
+.MuiOutlinedInput-root .Mui-focused fieldset {
+    border-bottom: 1px solid orange !important;
+}
+
 #outlined-adornment-password-label {
 }
 
@@ -20,6 +42,26 @@ div input:-internal-autofill-selected {
 .form-container-logged-in {
     display: flex;
     justify-content: space-between;
+}
+
+.form-container-logged-in button {
+    border-radius: 0 !important;
+    border: 1px solid gray !important;
+}
+
+div .generate-btn {
+    font-size: 13px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div .d-flex-jc {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 100%;
+    gap: 5px;
 }
 
 .btn-base {
@@ -40,7 +82,7 @@ div input:-internal-autofill-selected {
 }
 
 .btn-white:hover {
-    background-color: #e6d4b9b7 !important;
+    background-color: #1A1A1A14 !important;
 }
 
 .upper {
@@ -60,5 +102,9 @@ button {
     text-transform: inherit !important;
     color: #1A1A1A !important;
     font-weight: 500;
+
+    border-radius: 8px !important;
+
+    font-size: 15px;
 }
 

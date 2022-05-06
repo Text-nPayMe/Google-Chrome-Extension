@@ -19,6 +19,7 @@ import MuiAlert from '@mui/material/Alert';
 
 import './App.css';
 import Login from './Login';
+import SvgCheckIcon from './Vector.svg'
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -28,7 +29,7 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 
 var jsencryptConf = {
-  "publicKeys": "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQAB-----END PUBLIC KEY-----",
+  "publicKey": "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQAB-----END PUBLIC KEY-----",
   "privateKey": "-----BEGIN RSA PRIVATE KEY-----MIICXQIBAAKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQABAoGAfY9LpnuWK5Bs50UVep5c93SJdUi82u7yMx4iHFMc/Z2hfenfYEzu+57fI4fvxTQ//5DbzRR/XKb8ulNv6+CHyPF31xk7YOBfkGI8qjLoq06V+FyBfDSwL8KbLyeHm7KUZnLNQbk8yGLzB3iYKkRHlmUanQGaNMIJziWOkN+N9dECQQD0ONYRNZeuM8zd8XJTSdcIX4a3gy3GGCJxOzv16XHxD03GW6UNLmfPwenKu+cdrQeaqEixrCejXdAFz/7+BSMpAkEA8EaSOeP5Xr3ZrbiKzi6TGMwHMvC7HdJxaBJbVRfApFrE0/mPwmP5rN7QwjrMY+0+AbXcm8mRQyQ1+IGEembsdwJBAN6az8Rv7QnD/YBvi52POIlRSSIMV7SwWvSK4WSMnGb1ZBbhgdg57DXaspcwHsFV7hByQ5BvMtIduHcT14ECfcECQATeaTgjFnqE/lQ22Rk0eGaYO80cc643BXVGafNfd9fcvwBMnk0iGX0XRsOozVt5AzilpsLBYuApa66NcVHJpCECQQDTjI2AQhFc1yRnCU/YgDnSpJVm1nASoRUnU8Jfm3Ozuku7JUXcVpt08DFSceCEX9unCuMcT72rAQlLpdZir876-----END RSA PRIVATE KEY-----"
 }
 // 'https://d-api.textnpay.co/',
@@ -45,7 +46,10 @@ const initState = {
   firstStep: true,
   isGenerateMagic: false,
   makeNewPayment: false,
-  errors: {}
+  receptLink: null,
+  receptLinkDisable: false,
+  errors: {},
+  blur: {},
 }
 
 const focusedColor = "orange";
@@ -75,9 +79,15 @@ const useStyles = makeStyles({
 function App() {
   const classes = useStyles();
   var encrypt = new JSEncrypt();
+  var decrypt = new JSEncrypt();
+
+  encrypt.setPublicKey(jsencryptConf.publicKey);
+  decrypt.setPrivateKey(jsencryptConf.privateKey);
+
 
   const [mainState, setMainState] = useState(initState);
   const [openLoginForm, setOpenLoginForm] = useState(false);
+  const [paymentFinished, setPaymentFinished] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [notification, setNotification] = useState({
     open: false,
@@ -89,7 +99,6 @@ function App() {
 
 
   const handleChange = (event) => {
-
       setMainState({
         ...mainState,
         [event.target.name]: event.target.value,
@@ -97,7 +106,7 @@ function App() {
           ...mainState.errors,
           [`err${event.target.name}`]: !event.target.value.length,
         }
-      })
+      });
 
   }
 
@@ -113,7 +122,9 @@ function App() {
   };
 
   const checkUserExist = (event) => {
+    console.log(event, 'event');
     if (event.key === "Enter") {
+
       var options = {
         method: 'PATCH',
         body: JSON.stringify({
@@ -127,12 +138,14 @@ function App() {
       fetch(`${appUrl}users/existsname`, options)
       .then(res => res.json())
       .then(userData => {
-        console.log(userData);
         if (userData.success && Object.keys(userData.data).length) {
           setMainState({
             ...mainState,
             receiver: userData.data.name,
-            phone: userData.data.phone
+            phone: userData.data.phone,
+            blur: {
+              blphone: true
+            }
           })
         } else {
           setNotification({
@@ -160,7 +173,6 @@ function App() {
     }
 
 
-    encrypt.setPublicKey(jsencryptConf.publicKey);
     let loginHash = encrypt.encrypt(mainState.login);
     let passwordHash = encrypt.encrypt(mainState.password);
 
@@ -179,7 +191,6 @@ function App() {
     .then(res => res.json())
     .then(loginData => {
       if (loginData.success) {
-        console.log(loginData);
         let authtoken = loginData?.data?.tokens.accessToken
 
         encrypt.setPublicKey(jsencryptConf.publicKey);
@@ -222,11 +233,37 @@ function App() {
               fetch(`${appUrl}transactions/${transactionId}/approve`, approveTransactionOptions)
                 .then(res => res.json())
                 .then(approvedTransactionData => {
-                  if (approvedTransactionData.success) {}
+                  if (approvedTransactionData.success) {
+                    setPaymentFinished(true)
+                    setNotification({
+                      ...notification,
+                      open: true,
+                      message: 'Transaction successfully completed!',
+                      type: 'success'
+                    });
+                    setMainState({
+                      ...mainState,
+                      receptLink: approvedTransactionData.data.url
+                    })
+                  } else {
+                    setNotification({
+                      ...notification,
+                      open: true,
+                      message: approvedTransactionData.error,
+                      type: 'error'
+                    });
+                  }
                 })
                 .catch(err => {
                   console.log(err, 'err');
                 })
+              } else {
+                setNotification({
+                  ...notification,
+                  open: true,
+                  message: transactionData.error,
+                  type: 'error'
+                });
               }
             })
             .catch(err => {
@@ -284,7 +321,17 @@ function App() {
           //     ...loginData.data.user,
           //     authtoken: loginData.data.tokens.accessToken
           // }));
-          localStorage.setItem('TpM-user', JSON.stringify(loginData.data.user))
+          const encryptedLocalData = encrypt.encrypt(loginData.data.user.phone)
+          localStorage.setItem('TpM-user', JSON.stringify({
+            user: encryptedLocalData
+          }))
+
+          setMainState({
+            ...mainState,
+            login: '',
+            password: '',
+            blur: {}
+          })
 
           if (shouldGenerateLink) {
             var url = `${"https://link.textnpay.co/"}magic-link?sender=${encodeURIComponent(mainState.phone)}&receiver=${encodeURIComponent(mainState.login)}&amount=${mainState.amount}&token=${authtoken}`;
@@ -296,6 +343,7 @@ function App() {
               message: 'Magic link was generated and copied!',
               type: 'success'
             });
+            setPaymentFinished(true);
           } else {
             setNotification({
               ...notification,
@@ -332,6 +380,9 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem('TpM-user');
     setCurrentUser(null);
+    setPaymentFinished(false);
+    setMainState(initState)
+    setOpenLoginForm(false)
   }
 
   const changeStepAndValidate = (event) => {
@@ -355,7 +406,7 @@ function App() {
     setMainState({
       ...mainState,
       firstStep: false
-    })
+    });
   }
 
   const changeStepGenAndValidate = (event) => {
@@ -381,9 +432,12 @@ function App() {
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('TpM-user'));
-    console.log(items, 'items')
     if (items) {
       setCurrentUser(items);
+    }
+
+    return () => {
+      setMainState(initState);
     }
   }, []);
 
@@ -392,18 +446,50 @@ function App() {
       ...mainState,
       makeNewPayment: !mainState.makeNewPayment,
     })
+    
   }
 
-  const { phone, receiver, amount, login, password, showPassword, firstStep, isGenerateMagic, makeNewPayment } = mainState;
+  const handleCopyReceiptLink = (event) => {
+    event.preventDefault();
+    var receiptUrl = `${mainState.receptLink}`;
+    navigator.clipboard.writeText(receiptUrl);
+    setNotification({
+      ...notification,
+      open: true,
+      message: 'Receipt URL was copied!',
+      type: 'success',
+    });
+    setMainState({
+      ...mainState,
+      receptLinkDisable: true
+    })
+  }
+
+  const handleMakeNewPayment = () => {
+    setMainState(initState);
+    setPaymentFinished(false)
+  }
+
+  const { phone, receiver, amount, login, password, showPassword, firstStep, isGenerateMagic, makeNewPayment, receptLink, receptLinkDisable } = mainState;
 
   const { errphone, errreceiver, erramount, errlogin, errpassword } = mainState.errors;
+  const { blphone, blreceiver, blamount, bllogin, blpassword } = mainState.blur;
   const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
 
+  const onBlur = (event) => {
+    setMainState({
+      ...mainState,
+      blur: {
+        ...mainState.blur,
+        [`bl${event.target.name}`]: Boolean(event.target.value.length)
+      }
+    });
+  }
 
   return (
     <div className="App">
           <Box
-            component="form"
+            component="div"
             noValidate
             autoComplete="off"
             className="form-container"
@@ -461,26 +547,43 @@ function App() {
                           value={login}
                           helperText={errlogin && "Please Enter login."}
                           onChange={handleChange}
+                          onBlur={onBlur}
+                          InputProps={{
+                            endAdornment: bllogin && (
+                              <InputAdornment position="start">
+                                <img src={SvgCheckIcon} />
+                              </InputAdornment>
+                            ),
+                          }}
                       />
 
                       <FormControl variant="standard">
                         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                         <Input
+                            className={classes.root}
                             name="password"
                             id="standard-adornment-password"
                             type={showPassword ? 'text' : 'password'}
                             value={password}
                             onChange={handleChange}
+                            onBlur={onBlur}
                             endAdornment={
-                              <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    // onMouseDown={handleMouseDownPassword}
-                                >
-                                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                              </InputAdornment>
+                              <>
+                                <InputAdornment position="end">
+                                  <IconButton
+                                      aria-label="toggle password visibility"
+                                      onClick={handleClickShowPassword}
+                                      // onMouseDown={handleMouseDownPassword}
+                                  >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+                               {blpassword && (
+                                  <InputAdornment position="start">
+                                    <img src={SvgCheckIcon} />
+                                  </InputAdornment>
+                                )}
+                              </>
                             }
                         />
                         {errpassword && <FormHelperText id="component-error-text">Please Enter password.</FormHelperText>}
@@ -514,6 +617,14 @@ function App() {
                           helperText={errreceiver && "Please Enter receiver name."}
                           onChange={handleChange}
                           onKeyDown={checkUserExist}
+                          onBlur={onBlur}
+                          InputProps={{
+                            endAdornment: blreceiver && (
+                              <InputAdornment position="start">
+                                <img src={SvgCheckIcon} />
+                              </InputAdornment>
+                            ),
+                          }}
                         />
 
                         <TextField
@@ -526,6 +637,14 @@ function App() {
                           value={phone}
                           helperText={errphone && "Please Enter receiver phone."}
                           onChange={handleChange}
+                          onBlur={onBlur}
+                          InputProps={{
+                            endAdornment: blphone && (
+                              <InputAdornment position="start">
+                                <img src={SvgCheckIcon} />
+                              </InputAdornment>
+                            ),
+                          }}
                         />
 
                         <TextField
@@ -538,9 +657,17 @@ function App() {
                           value={amount}
                           helperText={erramount && "Please Enter amount."}
                           onChange={handleChange}
+                          onBlur={onBlur}
+                          InputProps={{
+                            endAdornment: blamount && (
+                              <InputAdornment position="start">
+                                <img src={SvgCheckIcon} />
+                              </InputAdornment>
+                            ),
+                          }}
                         />
                         <Button variant="contained" className="btn-base" onClick={changeStepAndValidate}>Send</Button>
-                        <Button variant="contained" className="btn-white" onClick={changeStepGenAndValidate}>Generate a magic lin</Button>
+                        <Button variant="contained" className="btn-white" onClick={changeStepGenAndValidate}>Generate a magic link</Button>
                       </>
                     ) : null
                   }
@@ -559,6 +686,14 @@ function App() {
                           value={login}
                           helperText={errlogin && "Please Enter login."}
                           onChange={handleChange}
+                          onBlur={onBlur}
+                          InputProps={{
+                            endAdornment: bllogin && (
+                              <InputAdornment position="start">
+                                <img src={SvgCheckIcon} />
+                              </InputAdornment>
+                            ),
+                          }}
                         />
 
                         <FormControl variant="standard">
@@ -569,16 +704,25 @@ function App() {
                             type={showPassword ? 'text' : 'password'}
                             value={password}
                             onChange={handleChange}
+                            onBlur={onBlur}
                             endAdornment={
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                  onClick={handleClickShowPassword}
-                                  // onMouseDown={handleMouseDownPassword}
-                                >
-                                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                              </InputAdornment>
+                              <>
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    // onMouseDown={handleMouseDownPassword}
+                                  >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+                                {blpassword && (
+                                  <InputAdornment position="start">
+                                    <img src={SvgCheckIcon} />
+                                  </InputAdornment>
+                                )}
+                              </>
+
                             }
                           />
                           {errpassword && <FormHelperText id="component-error-text">Please Enter password.</FormHelperText>}
@@ -586,21 +730,49 @@ function App() {
                         {
                           isGenerateMagic ? (
                             <Button
+                              disabled={paymentFinished}
                               variant="contained"
-                              className={`${login.length && password.length ? 'btn-base' : 'btn-white'} upper`}
+                              className={`${login.length && password.length ? 'btn-base' : 'btn-white'} upper generate-btn`}
                               onClick={() => handleLoginAndGenerate(true)}
                             >
                               Login and generate a magic link
+                              {paymentFinished && <img src={SvgCheckIcon} />}
                             </Button>
                           ) : (
                             <Button
+                              disabled={paymentFinished}
                               variant="contained"
-                              className={`${login.length && password.length ? 'btn-base' : 'btn-white'} `}
+                              className={`${login.length && password.length ? 'btn-base' : 'btn-white'} d-flex-jc`}
                               onClick={handleSubmitPayment}
                             >
                               Approve the payment
+                              {paymentFinished && <img src={SvgCheckIcon} />}
                             </Button>
                           )
+
+                        }
+
+                        {
+                          paymentFinished ? (
+                            <>
+                              <Button
+                                variant="contained"
+                                className={'btn-white'}
+                                onClick={handleMakeNewPayment}
+                              >
+                                Make a new payment
+                              </Button>
+                              <Button
+                                variant="contained"
+                                className={'btn-base d-flex-jc'}
+                                onClick={handleCopyReceiptLink}
+                              >
+                                Copy the payment receipt link
+                                {Boolean(receptLinkDisable) && <img src={SvgCheckIcon} />}
+                              </Button>
+                            </>
+              
+                          ) : null
                         }
 
                       </>
