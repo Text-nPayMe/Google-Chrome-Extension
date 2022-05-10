@@ -255,7 +255,7 @@ function createFormAndMainButton() {
                 <div class="login-form d-none">
                      <div class="TaP-FormControl-root">
                         <label class="TaP-InputLabel-root" for="loginElement" id="loginElementLabel">
-                            Login
+                            Username
                         </label>
                         <div class="TaP-Input-root">
                             <input 
@@ -442,6 +442,13 @@ function createFormAndMainButton() {
         .note {
             font-size: 12px;
             color: orange;
+        }
+
+        .a-teg {
+          background-color: white !important;
+          text-align: center;
+          text-decoration: underline;
+          cursor: pointer;
         }
         
         .TaP-container {
@@ -1411,11 +1418,6 @@ function addMainFunctionality () {
     generateBtn.addEventListener('click', function(event) {
       event.preventDefault();
 
-      if (!state.receiver.length || !state.phone.length || !state.amount.length) {
-        pushNotification('Please fill all fields!', 'normal');
-        return;
-      }
-
       Array.prototype.forEach.call(formStepOneItems, element => {
         element.style.display = 'none';
       });
@@ -1633,9 +1635,11 @@ function addMainFunctionality () {
         if (loginForm.classList.contains("d-none")) {
             loginForm.classList.remove('d-none');
             toggleLogin.innerText = 'Close';
+            toggleLogin.classList.add('a-teg')
         } else {
             loginForm.classList.add('d-none');
             toggleLogin.innerText = 'Login';
+            toggleLogin.classList.add('a-teg')
         }
     });
 
@@ -1697,9 +1701,11 @@ function addMainFunctionality () {
         if (makeNewPaymentForm.classList.contains("d-none")) {
             makeNewPaymentForm.classList.remove('d-none');
             toggleMakeNewPayment.innerText = 'Close payment form';
+            toggleMakeNewPayment.classList.add('a-teg');
         } else {
             makeNewPaymentForm.classList.add('d-none');
             toggleMakeNewPayment.innerText = 'Make new payment';
+            toggleMakeNewPayment.classList.remove('a-teg');
         }
     });
 

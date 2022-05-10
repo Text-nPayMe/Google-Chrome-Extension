@@ -411,17 +411,6 @@ function App() {
 
   const changeStepGenAndValidate = (event) => {
     event.preventDefault();
-    const { phone, receiver, amount } = mainState;
-    if (!phone || !receiver || !amount) {
-      setNotification({
-        ...notification,
-        open: true,
-        message: 'Please fill all fields!',
-        type: 'warning',
-      });
-
-      return
-    }
 
     setMainState({
       ...mainState,
@@ -499,15 +488,22 @@ function App() {
                 <>
                   <div className="form-container-logged-in">
                     { (currentUser.name && currentUser.surname) ? `${currentUser.name} ${currentUser.surname}` : "You're logged in" }
-                    <button onClick={handleLogout}>Logout</button>
+                    <a href='#' onClick={handleLogout}>Logout</a>
                   </div>
-                  <Button
-                    variant="contained"
-                    className="btn-base"
-                    onClick={handleMakePaymentBtn}
-                  >
-                    {makeNewPayment ? "Close Payment Form" : "Make a Payment"}
-                  </Button>
+                  {
+                    makeNewPayment ? (
+                      <a href='#' onClick={handleMakePaymentBtn} align="center">Close Payment Form</a>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        className="btn-base"
+                        onClick={handleMakePaymentBtn}
+                      >
+                        Make a Payment
+                      </Button>
+                    )
+                  }
+                  
                 </>
               ) : (
                 <>
@@ -521,15 +517,25 @@ function App() {
                     </Button>
                   </a>
 
-                  <Button
-                      variant="contained"
-                      className="btn-base"
-                      onClick={() => {
-                        setOpenLoginForm(!openLoginForm)
-                      }}
-                  >
-                    { openLoginForm ? 'Close' : 'Login' }
-                  </Button>
+                  {
+                    openLoginForm ? (
+                      <a href="#" onClick={() => setOpenLoginForm(false)} align="center">
+                        Close
+                      </a>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        className="btn-base"
+                        onClick={() => {
+                          setOpenLoginForm(true)
+                        }}
+                      >
+                        Login
+                      </Button>
+                    )
+                  }
+
+                  
                 </>
               )
             }
@@ -541,7 +547,7 @@ function App() {
                           className={classes.root}
                           name="login"
                           id="standard-basic"
-                          label="Login"
+                          label="Username"
                           variant="standard"
                           error={errlogin}
                           value={login}
@@ -652,6 +658,7 @@ function App() {
                           name="amount"
                           id="standard-basic"
                           label="Amount"
+                          type="number"
                           variant="standard"
                           error={erramount}
                           value={amount}
@@ -680,7 +687,7 @@ function App() {
                           className={classes.root}
                           name="login"
                           id="standard-basic"
-                          label="Login"
+                          label="Username"
                           variant="standard"
                           error={errlogin}
                           value={login}
@@ -755,20 +762,24 @@ function App() {
                         {
                           paymentFinished ? (
                             <>
+                              {
+                                !isGenerateMagic ? (
+                                  <Button
+                                    variant="contained"
+                                    className={'btn-white d-flex-jc'}
+                                    onClick={handleCopyReceiptLink}
+                                  >
+                                    Copy the payment receipt link
+                                    {Boolean(receptLinkDisable) && <img src={SvgCheckIcon} />}
+                                  </Button>
+                                ) : null
+                              }
                               <Button
                                 variant="contained"
                                 className={'btn-white'}
                                 onClick={handleMakeNewPayment}
                               >
                                 Make a new payment
-                              </Button>
-                              <Button
-                                variant="contained"
-                                className={'btn-base d-flex-jc'}
-                                onClick={handleCopyReceiptLink}
-                              >
-                                Copy the payment receipt link
-                                {Boolean(receptLinkDisable) && <img src={SvgCheckIcon} />}
                               </Button>
                             </>
               
