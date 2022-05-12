@@ -298,7 +298,7 @@ function createFormAndMainButton() {
             </div>
             <!--     Logged In       -->
             <div id="logged-in">
-                <div>You're logged in <button id="logout-btn">Logout</button></div>
+                <div>You're logged in <button id="logout-btn" class="a-teg">Logout</button></div>
                 <button class="TaP-button btn-static login-form-btn" id="handle-make-new-payment">
                   Make a Payment
                 </button>
@@ -449,6 +449,9 @@ function createFormAndMainButton() {
           text-align: center;
           text-decoration: underline;
           cursor: pointer;
+
+          border: none;
+          font-weight: 500;
         }
         
         .TaP-container {
@@ -1418,6 +1421,11 @@ function addMainFunctionality () {
     generateBtn.addEventListener('click', function(event) {
       event.preventDefault();
 
+      if (!state.amount.length) {
+        pushNotification('Please fill amount for the next step!', 'normal');
+        return;
+      }
+
       Array.prototype.forEach.call(formStepOneItems, element => {
         element.style.display = 'none';
       });
@@ -1453,7 +1461,7 @@ function addMainFunctionality () {
           console.log(loginData);
           state.authtoken = loginData?.data?.tokens.accessToken;
 
-          var url = `${"https://link.textnpay.co/"}magic-link?sender=${encodeURIComponent(state.sender)}&receiver=${encodeURIComponent(state.phone)}&amount=${state.amount}&token=${state.authtoken}`;
+          var url = `${"https://link.textnpay.co/"}magic-link?token=${state.authtoken}&sender=${encodeURIComponent(state.sender)}&receiver=${encodeURIComponent(state.phone)}&amount=${state.amount}&user=${loginData?.data?.user.id}`;
           navigator.clipboard.writeText(url);
           logingenerateBtn.style.pointerEvents = 'none';
           pushNotification('Magic link was generated and copied', 'green');
